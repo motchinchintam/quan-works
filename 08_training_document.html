@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Training Document</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#fff;--bg2:#f5f5f3;--bg3:#ebebea;
+  --tx:#1a1a1a;--tx2:#555;--tx3:#888;
+  --bd:rgba(0,0,0,0.12);--bd2:rgba(0,0,0,0.18);
+  --blue:#185FA5;--blue-bg:#E6F1FB;--blue-tx:#0C447C;
+  --r:10px;--rl:14px
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#1b1b1b;--bg2:#242424;--bg3:#2e2e2e;
+  --tx:#f0f0f0;--tx2:#aaa;--tx3:#666;
+  --bd:rgba(255,255,255,0.08);--bd2:rgba(255,255,255,0.16);
+  --blue-bg:#0C447C;--blue-tx:#B5D4F4;
+}}
+body{font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;background:var(--bg2);color:var(--tx);padding:2.5rem 1.25rem;min-height:100vh}
+.page-wrap{max-width:900px;margin:0 auto}
+.topbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:1.5rem}
+.title-block{flex:1;min-width:220px}
+.title-block h1{font-size:28px;font-weight:600;margin-bottom:6px}
+.title-block p{font-size:14px;color:var(--tx2);line-height:1.6}
+.btn{padding:10px 16px;border-radius:12px;font-size:13px;font-weight:600;border:0.5px solid var(--bd2);background:var(--bg);color:var(--tx);cursor:pointer;transition:background .15s,border-color .15s}
+.btn:hover{background:var(--bg3)}
+.btn-primary{background:var(--blue);border-color:transparent;color:#fff}
+.document{background:var(--bg);border:0.5px solid var(--bd);border-radius:var(--rl);overflow:hidden}
+.section{padding:24px 28px;border-bottom:0.5px solid var(--bg3)}
+.section:last-child{border-bottom:none}
+.section-title{font-size:12px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px}
+.editable{min-height:120px;padding:14px 16px;border-radius:12px;border:1px solid var(--bd);background:var(--bg2);color:var(--tx);font-size:14px;line-height:1.8;outline:none;cursor:text}
+.editable[contenteditable]:empty::before{content:attr(placeholder);color:var(--tx3)}
+.note-card{background:var(--bg3);border-radius:var(--rl);padding:18px;display:grid;gap:14px}
+.meta-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.meta-item{font-size:13px;color:var(--tx2)}
+.meta-item strong{color:var(--tx);font-weight:600}
+.footer{margin-top:1.5rem;text-align:center;font-size:13px;color:var(--tx3)}
+@media(max-width:560px){.topbar{flex-direction:column;align-items:stretch}.btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="topbar">
+    <div class="title-block">
+      <h1>Training Document</h1>
+      <p>A dedicated workspace for your training report document. Edit sections and print or export when ready.</p>
+    </div>
+    <a class="btn" href="index.html">Back to hub</a>
+    <button class="btn btn-primary" onclick="window.print()">Print / Export</button>
+  </div>
+
+  <div class="document">
+    <div class="section">
+      <div class="section-title">Document overview</div>
+      <div class="meta-list">
+        <div class="meta-item"><strong>Date</strong><div contenteditable="true" class="editable" placeholder="Enter date">April 8, 2026</div></div>
+        <div class="meta-item"><strong>Trainer</strong><div contenteditable="true" class="editable" placeholder="Enter trainer name">Your name</div></div>
+        <div class="meta-item"><strong>Program</strong><div contenteditable="true" class="editable" placeholder="Enter program title">Technical Training Program</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Executive summary</div>
+      <div contenteditable="true" class="editable" placeholder="Write a short summary of the training status and main findings.">Summarize the training progress, key outcomes, and next steps here.</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Training highlights</div>
+      <div contenteditable="true" class="editable" placeholder="List the key achievements, milestones, or trainee performance highlights.">- Completed technical workshop modules
+- Maintained strong attendance
+- Identified a few trainees needing additional support</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Action plan</div>
+      <div contenteditable="true" class="editable" placeholder="Outline follow-up actions, next training steps, and support requests.">- Review assessments and provide feedback
+- Schedule mentoring sessions for at-risk trainees
+- Confirm next assessment date</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Notes & remarks</div>
+      <div contenteditable="true" class="editable" placeholder="Add any additional comments, observations, or training notes.">Use this area for additional notes that should accompany the training document.</div>
+    </div>
+  </div>
+
+  <div class="footer">This page is a dedicated training document space. Content is editable directly in the browser.</div>
+</div>
+</body>
+</html>

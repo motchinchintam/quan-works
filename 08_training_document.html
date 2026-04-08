@@ -34,61 +34,240 @@ body{font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;background:var(--b
 .section-title{font-size:12px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px}
 .editable{min-height:120px;padding:14px 16px;border-radius:12px;border:1px solid var(--bd);background:var(--bg2);color:var(--tx);font-size:14px;line-height:1.8;outline:none;cursor:text}
 .editable[contenteditable]:empty::before{content:attr(placeholder);color:var(--tx3)}
-.note-card{background:var(--bg3);border-radius:var(--rl);padding:18px;display:grid;gap:14px}
-.meta-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.meta-item{font-size:13px;color:var(--tx2)}
-.meta-item strong{color:var(--tx);font-weight:600}
+.save-panel{background:var(--bg);border:0.5px solid var(--bd);border-radius:var(--rl);padding:18px 22px;margin-bottom:1.5rem;display:grid;gap:14px}
+.save-row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.save-row .field{flex:1;min-width:220px}
+.field label{display:block;font-size:12px;color:var(--tx2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.08em}
+.field input{width:100%;border:0.5px solid var(--bd2);border-radius:12px;padding:10px 12px;font-size:14px;background:var(--bg2);color:var(--tx);outline:none}
+.field input:focus{border-color:var(--blue);background:var(--bg)}
+.saved-list{display:grid;gap:10px}
+.saved-item{border:0.5px solid var(--bd);border-radius:14px;padding:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--bg3)}
+.saved-meta{flex:1;min-width:220px}
+.saved-name{font-size:14px;font-weight:600;color:var(--tx);margin-bottom:4px}
+.saved-info{font-size:12px;color:var(--tx3)}
+.saved-actions{display:flex;gap:8px;flex-wrap:wrap}
+.saved-actions .btn{padding:8px 12px;font-size:12px}
+.status-line{font-size:13px;color:var(--tx3)}
 .footer{margin-top:1.5rem;text-align:center;font-size:13px;color:var(--tx3)}
-@media(max-width:560px){.topbar{flex-direction:column;align-items:stretch}.btn{width:100%}}
-</style>
+@media(max-width:560px){.topbar{flex-direction:column;align-items:stretch}.btn{width:100%}.save-row{flex-direction:column;align-items:stretch}.saved-item{flex-direction:column;align-items:stretch}}</style>
 </head>
 <body>
 <div class="page-wrap">
   <div class="topbar">
     <div class="title-block">
       <h1>Training Document</h1>
-      <p>A dedicated workspace for your training report document. Edit sections and print or export when ready.</p>
+      <p>A dedicated workspace for your training report document. Edit sections, save them as documents, and reopen later.</p>
     </div>
     <a class="btn" href="index.html">Back to hub</a>
     <button class="btn btn-primary" onclick="window.print()">Print / Export</button>
+  </div>
+
+  <div class="save-panel">
+    <div class="save-row">
+      <div class="field">
+        <label for="doc-name">Document name</label>
+        <input id="doc-name" placeholder="e.g. April training report"/>
+        <input type="hidden" id="doc-id" />
+      </div>
+      <button class="btn btn-primary" onclick="saveDocument()">Save document</button>
+      <button class="btn" onclick="newDocument()">New document</button>
+    </div>
+    <div class="status-line" id="save-status">No saved document loaded.</div>
+    <div class="saved-list" id="saved-documents"></div>
   </div>
 
   <div class="document">
     <div class="section">
       <div class="section-title">Document overview</div>
       <div class="meta-list">
-        <div class="meta-item"><strong>Date</strong><div contenteditable="true" class="editable" placeholder="Enter date">April 8, 2026</div></div>
-        <div class="meta-item"><strong>Trainer</strong><div contenteditable="true" class="editable" placeholder="Enter trainer name">Your name</div></div>
-        <div class="meta-item"><strong>Program</strong><div contenteditable="true" class="editable" placeholder="Enter program title">Technical Training Program</div></div>
+        <div class="meta-item"><strong>Date</strong><div id="doc-date" contenteditable="true" class="editable" placeholder="Enter date">April 8, 2026</div></div>
+        <div class="meta-item"><strong>Trainer</strong><div id="doc-trainer" contenteditable="true" class="editable" placeholder="Enter trainer name">Your name</div></div>
+        <div class="meta-item"><strong>Program</strong><div id="doc-program" contenteditable="true" class="editable" placeholder="Enter program title">Technical Training Program</div></div>
       </div>
     </div>
 
     <div class="section">
       <div class="section-title">Executive summary</div>
-      <div contenteditable="true" class="editable" placeholder="Write a short summary of the training status and main findings.">Summarize the training progress, key outcomes, and next steps here.</div>
+      <div id="doc-summary" contenteditable="true" class="editable" placeholder="Write a short summary of the training status and main findings.">Summarize the training progress, key outcomes, and next steps here.</div>
     </div>
 
     <div class="section">
       <div class="section-title">Training highlights</div>
-      <div contenteditable="true" class="editable" placeholder="List the key achievements, milestones, or trainee performance highlights.">- Completed technical workshop modules
+      <div id="doc-highlights" contenteditable="true" class="editable" placeholder="List the key achievements, milestones, or trainee performance highlights.">- Completed technical workshop modules
 - Maintained strong attendance
 - Identified a few trainees needing additional support</div>
     </div>
 
     <div class="section">
       <div class="section-title">Action plan</div>
-      <div contenteditable="true" class="editable" placeholder="Outline follow-up actions, next training steps, and support requests.">- Review assessments and provide feedback
+      <div id="doc-action" contenteditable="true" class="editable" placeholder="Outline follow-up actions, next training steps, and support requests.">- Review assessments and provide feedback
 - Schedule mentoring sessions for at-risk trainees
 - Confirm next assessment date</div>
     </div>
 
     <div class="section">
       <div class="section-title">Notes & remarks</div>
-      <div contenteditable="true" class="editable" placeholder="Add any additional comments, observations, or training notes.">Use this area for additional notes that should accompany the training document.</div>
+      <div id="doc-notes" contenteditable="true" class="editable" placeholder="Add any additional comments, observations, or training notes.">Use this area for additional notes that should accompany the training document.</div>
     </div>
   </div>
 
   <div class="footer">This page is a dedicated training document space. Content is editable directly in the browser.</div>
 </div>
+<script>
+const STORAGE_KEY = 'training_document_store';
+const DRAFT_KEY = 'training_document_draft';
+
+function getSavedDocuments() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
+}
+
+function setSavedDocuments(docs) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(docs));
+}
+
+function getCurrentDraft() {
+  try { return JSON.parse(localStorage.getItem(DRAFT_KEY)); } catch { return null; }
+}
+
+function setCurrentDraft(doc) {
+  localStorage.setItem(DRAFT_KEY, JSON.stringify(doc));
+}
+
+function clearCurrentDraft() {
+  localStorage.removeItem(DRAFT_KEY);
+}
+
+function updateStatus(message, isError) {
+  const status = document.getElementById('save-status');
+  status.textContent = message;
+  status.style.color = isError ? '#A32D2D' : 'inherit';
+}
+
+function readDocumentFields() {
+  return {
+    id: document.getElementById('doc-id').value || Date.now().toString(),
+    name: document.getElementById('doc-name').value.trim(),
+    date: document.getElementById('doc-date').innerHTML,
+    trainer: document.getElementById('doc-trainer').innerHTML,
+    program: document.getElementById('doc-program').innerHTML,
+    summary: document.getElementById('doc-summary').innerHTML,
+    highlights: document.getElementById('doc-highlights').innerHTML,
+    actionPlan: document.getElementById('doc-action').innerHTML,
+    notes: document.getElementById('doc-notes').innerHTML,
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+function writeDocumentFields(doc) {
+  document.getElementById('doc-id').value = doc.id || '';
+  document.getElementById('doc-name').value = doc.name || '';
+  document.getElementById('doc-date').innerHTML = doc.date || '';
+  document.getElementById('doc-trainer').innerHTML = doc.trainer || '';
+  document.getElementById('doc-program').innerHTML = doc.program || '';
+  document.getElementById('doc-summary').innerHTML = doc.summary || '';
+  document.getElementById('doc-highlights').innerHTML = doc.highlights || '';
+  document.getElementById('doc-action').innerHTML = doc.actionPlan || '';
+  document.getElementById('doc-notes').innerHTML = doc.notes || '';
+}
+
+function saveDocument() {
+  const name = document.getElementById('doc-name').value.trim();
+  if (!name) {
+    updateStatus('Enter a document name before saving.', true);
+    return;
+  }
+
+  const docs = getSavedDocuments();
+  const current = readDocumentFields();
+  const existingIndex = docs.findIndex(doc => doc.id === current.id);
+
+  if (existingIndex >= 0) {
+    docs[existingIndex] = current;
+  } else {
+    docs.unshift(current);
+  }
+
+  setSavedDocuments(docs);
+  setCurrentDraft(current);
+  renderSavedDocuments();
+  updateStatus('Document saved locally. You can reload it from the list below.');
+}
+
+function newDocument() {
+  document.getElementById('doc-id').value = '';
+  document.getElementById('doc-name').value = '';
+  document.getElementById('doc-date').innerHTML = '';
+  document.getElementById('doc-trainer').innerHTML = '';
+  document.getElementById('doc-program').innerHTML = '';
+  document.getElementById('doc-summary').innerHTML = '';
+  document.getElementById('doc-highlights').innerHTML = '';
+  document.getElementById('doc-action').innerHTML = '';
+  document.getElementById('doc-notes').innerHTML = '';
+  clearCurrentDraft();
+  updateStatus('Ready for a new document.');
+}
+
+function loadDocument(id) {
+  const docs = getSavedDocuments();
+  const doc = docs.find(item => item.id === id);
+  if (!doc) {
+    updateStatus('Saved document not found.', true);
+    return;
+  }
+  writeDocumentFields(doc);
+  setCurrentDraft(doc);
+  updateStatus('Loaded "' + doc.name + '" from saved documents.');
+}
+
+function deleteDocument(id) {
+  if (!confirm('Delete this saved document?')) return;
+  const docs = getSavedDocuments().filter(item => item.id !== id);
+  setSavedDocuments(docs);
+  if (document.getElementById('doc-id').value === id) {
+    newDocument();
+  }
+  renderSavedDocuments();
+  updateStatus('Deleted saved document.');
+}
+
+function renderSavedDocuments() {
+  const container = document.getElementById('saved-documents');
+  const docs = getSavedDocuments();
+  if (!docs.length) {
+    container.innerHTML = '<div class="saved-item"><div class="saved-meta"><div class="saved-name">No saved documents yet.</div><div class="saved-info">Use \"Save document\" to store your work here.</div></div></div>';
+    return;
+  }
+
+  container.innerHTML = '';
+  docs.forEach(doc => {
+    const listItem = document.createElement('div');
+    listItem.className = 'saved-item';
+    listItem.innerHTML = `
+      <div class="saved-meta">
+        <div class="saved-name">${doc.name}</div>
+        <div class="saved-info">Updated ${new Date(doc.updatedAt).toLocaleString('en-GB')}</div>
+      </div>
+      <div class="saved-actions">
+        <button class="btn btn-primary" onclick="loadDocument('${doc.id}')">Load</button>
+        <button class="btn btn" onclick="deleteDocument('${doc.id}')">Delete</button>
+      </div>
+    `;
+    container.appendChild(listItem);
+  });
+}
+
+function restoreDraft() {
+  const draft = getCurrentDraft();
+  if (!draft) return;
+  writeDocumentFields(draft);
+  updateStatus('Restored your last draft from browser storage.');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderSavedDocuments();
+  restoreDraft();
+});
+</script>
 </body>
 </html>
+

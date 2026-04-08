@@ -8,20 +8,34 @@ import DataManagerView from './views/DataManagerView';
 import CohortDashboardView from './views/CohortDashboardView';
 import PrintReportView from './views/PrintReportView';
 import TrainingDocumentView from './views/TrainingDocumentView';
+import LearningHubView from './views/learning/LearningHubView';
+import FlashcardView from './views/learning/FlashcardView';
+import QuizView from './views/learning/QuizView';
+import StudyTimerView from './views/learning/StudyTimerView';
+import GoalTrackerView from './views/learning/GoalTrackerView';
+import StudyNotesView from './views/learning/StudyNotesView';
 import './App.css';
 
-type View = 'hub' | 'testtracker' | 'attendance' | 'kpi' | 'email' | 'datamanager' | 'cohort' | 'printreport' | 'document';
+type View =
+  | 'hub' | 'testtracker' | 'attendance' | 'kpi' | 'email' | 'datamanager' | 'cohort' | 'printreport' | 'document'
+  | 'learnhub' | 'flashcard' | 'quiz' | 'studytimer' | 'goals' | 'studynotes';
 
-const NAV = [
-  { id: 'hub' as View, label: 'Hub', icon: '🏠' },
-  { id: 'testtracker' as View, label: 'Test Tracker', icon: '📝' },
-  { id: 'attendance' as View, label: 'Attendance', icon: '📅' },
-  { id: 'kpi' as View, label: 'KPI Tracker', icon: '🎯' },
-  { id: 'email' as View, label: 'Email Export', icon: '✉' },
-  { id: 'datamanager' as View, label: 'Data Manager', icon: '💾' },
-  { id: 'cohort' as View, label: 'Cohort Dashboard', icon: '🗂' },
-  { id: 'printreport' as View, label: 'Print Report', icon: '🖨' },
-  { id: 'document' as View, label: 'Training Doc', icon: '📄' },
+const NAV: { id: View; label: string; icon: string }[] = [
+  { id: 'hub', label: 'Hub', icon: '🏠' },
+  { id: 'testtracker', label: 'Test Tracker', icon: '📝' },
+  { id: 'attendance', label: 'Attendance', icon: '📅' },
+  { id: 'kpi', label: 'KPI Tracker', icon: '🎯' },
+  { id: 'email', label: 'Email Export', icon: '✉' },
+  { id: 'datamanager', label: 'Data Manager', icon: '💾' },
+  { id: 'cohort', label: 'Cohort Dashboard', icon: '🗂' },
+  { id: 'printreport', label: 'Print Report', icon: '🖨' },
+  { id: 'document', label: 'Training Doc', icon: '📄' },
+  { id: 'learnhub', label: 'Learning Hub', icon: '🎓' },
+  { id: 'flashcard', label: 'Flashcards', icon: '🃏' },
+  { id: 'quiz', label: 'Quiz Builder', icon: '🧠' },
+  { id: 'studytimer', label: 'Study Timer', icon: '⏱' },
+  { id: 'goals', label: 'Learning Goals', icon: '🎯' },
+  { id: 'studynotes', label: 'Study Notes', icon: '📓' },
 ];
 
 const NAV_GROUPS = [
@@ -29,6 +43,7 @@ const NAV_GROUPS = [
   { label: 'Training tools', ids: ['testtracker', 'attendance', 'cohort', 'document'] },
   { label: 'Reporting', ids: ['kpi', 'printreport', 'email'] },
   { label: 'Utilities', ids: ['datamanager'] },
+  { label: 'Learning Hub', ids: ['learnhub', 'flashcard', 'quiz', 'studytimer', 'goals', 'studynotes'] },
 ];
 
 export default function App() {
@@ -69,6 +84,12 @@ export default function App() {
         {view === 'cohort'      && <CohortDashboardView />}
         {view === 'printreport' && <PrintReportView />}
         {view === 'document'    && <TrainingDocumentView />}
+        {view === 'learnhub'    && <LearningHubView onNavigate={v => setView(v as View)} />}
+        {view === 'flashcard'   && <FlashcardView />}
+        {view === 'quiz'        && <QuizView />}
+        {view === 'studytimer'  && <StudyTimerView />}
+        {view === 'goals'       && <GoalTrackerView />}
+        {view === 'studynotes'  && <StudyNotesView />}
       </main>
     </div>
   );

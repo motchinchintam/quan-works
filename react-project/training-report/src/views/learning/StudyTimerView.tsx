@@ -125,7 +125,7 @@ export default function StudyTimerView() {
       {/* Task */}
       <div className="st-task-wrap">
         <input className="st-task-input" value={task} onChange={e => setTask(e.target.value)}
-          placeholder="What are you working on? (optional)" />
+          placeholder="e.g. SQL JOINs, TypeScript generics, HSK vocab..." />
       </div>
 
       {/* Stats */}

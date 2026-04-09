@@ -15,28 +15,39 @@ const LS_KEY = 'lh_study_notes';
 function load(): Note[] { try { return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch { return []; } }
 function save(n: Note[]) { localStorage.setItem(LS_KEY, JSON.stringify(n)); }
 
-const CATEGORIES = ['All', 'Math', 'Science', 'Language', 'Programming', 'History', 'Other'];
+const CATEGORIES = ['All', 'SQL', 'TypeScript', 'English', 'Chinese', 'Other'];
 const CAT_COLORS: Record<string, string> = {
-  Math: 'blue', Science: 'teal', Language: 'green',
-  Programming: 'purple', History: 'amber', Other: 'coral',
+  SQL: 'blue', TypeScript: 'purple', English: 'teal', Chinese: 'amber', Other: 'coral',
 };
 
 const SAMPLE: Note[] = [
   {
-    id: 1, title: 'JavaScript Closures', category: 'Programming',
-    content: 'A closure is a function that retains access to its outer scope even after the outer function has returned.\n\nExample:\nfunction counter() {\n  let count = 0;\n  return () => ++count;\n}\nconst inc = counter();\ninc(); // 1\ninc(); // 2',
-    tags: 'js, functions, scope', pinned: true,
+    id: 1, title: 'SQL JOIN Types', category: 'SQL',
+    content: 'INNER JOIN  — returns rows with a match in BOTH tables.\nLEFT JOIN   — all rows from left + matched from right (NULL if no match).\nRIGHT JOIN  — all rows from right + matched from left.\nFULL JOIN   — all rows from both; NULLs where no match.\nCROSS JOIN  — every combination of rows (cartesian product).\n\nTip: LEFT JOIN is the most common in reports.',
+    tags: 'joins, query, fundamentals', pinned: true,
     createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
   },
   {
-    id: 2, title: 'Photosynthesis', category: 'Science',
-    content: 'Photosynthesis converts light energy into chemical energy stored in glucose.\n\nFormula: 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂\n\nTakes place in chloroplasts. Two stages: light-dependent reactions and the Calvin cycle.',
-    tags: 'biology, plants, energy', pinned: false,
+    id: 2, title: 'TypeScript Utility Types', category: 'TypeScript',
+    content: 'Partial<T>       — all properties optional\nRequired<T>      — all properties required\nReadonly<T>      — all properties read-only\nPick<T, K>       — keep only keys K\nOmit<T, K>       — remove keys K\nRecord<K, V>     — map keys K to values V\nReturnType<T>    — extract return type of a function\n\nExample:\ntype UserPreview = Pick<User, "id" | "name">;',
+    tags: 'generics, utility, types', pinned: true,
+    createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 3, title: 'Chinese Tones', category: 'Chinese',
+    content: 'Mandarin has 4 tones + 1 neutral tone:\n\n1st tone (ˉ) — flat, high   e.g. mā (妈 mother)\n2nd tone (ˊ) — rising       e.g. má (麻 hemp)\n3rd tone (ˇ) — dip-rise     e.g. mǎ (马 horse)\n4th tone (ˋ) — falling      e.g. mà (骂 scold)\nNeutral tone  — short, light e.g. ma (吗 question)\n\nTip: get tones right early — they change meaning completely.',
+    tags: 'tones, pronunciation, HSK', pinned: false,
+    createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 4, title: 'English — Collocations with "make" vs "do"', category: 'English',
+    content: 'Common confusion: "make" vs "do"\n\nMAKE (create / produce):\n  make a decision, make a mistake, make progress,\n  make an effort, make a plan, make friends\n\nDO (perform an action / task):\n  do homework, do research, do a test,\n  do your best, do business, do exercise\n\nMemory trick: "make" = something new is created; "do" = activity/task.',
+    tags: 'collocations, vocabulary, grammar', pinned: false,
     createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
   },
 ];
 
-const blank = { title: '', content: '', category: 'Programming', tags: '', pinned: false };
+const blank = { title: '', content: '', category: 'SQL', tags: '', pinned: false };
 
 export default function StudyNotesView() {
   const [notes, setNotes] = useState<Note[]>(() => { const d = load(); return d.length ? d : SAMPLE; });

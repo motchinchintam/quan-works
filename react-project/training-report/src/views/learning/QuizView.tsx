@@ -8,24 +8,37 @@ const LS_KEY = 'lh_quizzes';
 function load(): Quiz[] { try { return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch { return []; } }
 function save(q: Quiz[]) { localStorage.setItem(LS_KEY, JSON.stringify(q)); }
 
-const SAMPLE: Quiz = {
-  id: 1, name: 'Sample Quiz', createdAt: new Date().toISOString(),
-  questions: [
-    { id: 1, text: 'What does CSS stand for?', correctId: 2, explanation: 'CSS = Cascading Style Sheets, used to style web pages.',
-      options: [{ id: 1, text: 'Computer Style Sheets' }, { id: 2, text: 'Cascading Style Sheets' }, { id: 3, text: 'Creative Style System' }, { id: 4, text: 'Colorful Style Sheets' }] },
-    { id: 2, text: 'Which of these is NOT a JavaScript data type?', correctId: 3, explanation: 'JavaScript has: string, number, boolean, object, undefined, null, symbol — not "float".',
-      options: [{ id: 1, text: 'string' }, { id: 2, text: 'boolean' }, { id: 3, text: 'float' }, { id: 4, text: 'undefined' }] },
-    { id: 3, text: 'What HTTP method is used to submit a form?', correctId: 2, explanation: 'POST sends form data to the server without exposing it in the URL.',
-      options: [{ id: 1, text: 'GET' }, { id: 2, text: 'POST' }, { id: 3, text: 'PUT' }, { id: 4, text: 'DELETE' }] },
-  ],
-};
+const SAMPLE: Quiz[] = [
+  {
+    id: 1, name: 'SQL Fundamentals', createdAt: new Date().toISOString(),
+    questions: [
+      { id: 1, text: 'Which SQL clause is used to filter rows after grouping?', correctId: 3, explanation: 'HAVING filters groups produced by GROUP BY. WHERE filters individual rows before grouping.',
+        options: [{ id: 1, text: 'WHERE' }, { id: 2, text: 'ORDER BY' }, { id: 3, text: 'HAVING' }, { id: 4, text: 'FILTER' }] },
+      { id: 2, text: 'What does LEFT JOIN return?', correctId: 2, explanation: 'LEFT JOIN returns all rows from the left table and matched rows from the right. Unmatched right-side columns are NULL.',
+        options: [{ id: 1, text: 'Only matching rows from both tables' }, { id: 2, text: 'All rows from the left table, NULLs for unmatched right rows' }, { id: 3, text: 'All rows from both tables' }, { id: 4, text: 'Only rows with no match' }] },
+      { id: 3, text: 'Which aggregate function counts non-NULL values?', correctId: 1, explanation: 'COUNT(column) counts non-NULL values. COUNT(*) counts all rows including NULLs.',
+        options: [{ id: 1, text: 'COUNT(column)' }, { id: 2, text: 'SUM(column)' }, { id: 3, text: 'AVG(column)' }, { id: 4, text: 'MAX(column)' }] },
+    ],
+  },
+  {
+    id: 2, name: 'TypeScript Basics', createdAt: new Date().toISOString(),
+    questions: [
+      { id: 1, text: 'What does the "readonly" keyword do in TypeScript?', correctId: 2, explanation: '"readonly" prevents a property from being reassigned after initialisation.',
+        options: [{ id: 1, text: 'Makes the property optional' }, { id: 2, text: 'Prevents the property from being reassigned' }, { id: 3, text: 'Makes the type nullable' }, { id: 4, text: 'Hides the property from the compiler' }] },
+      { id: 2, text: 'Which utility type makes all properties of T optional?', correctId: 3, explanation: 'Partial<T> constructs a type with all properties of T set to optional.',
+        options: [{ id: 1, text: 'Required<T>' }, { id: 2, text: 'Pick<T, K>' }, { id: 3, text: 'Partial<T>' }, { id: 4, text: 'Omit<T, K>' }] },
+      { id: 3, text: 'What symbol is used for a union type in TypeScript?', correctId: 1, explanation: 'The pipe | creates a union: string | number means the value can be either type.',
+        options: [{ id: 1, text: '|' }, { id: 2, text: '&' }, { id: 3, text: '?' }, { id: 4, text: '~' }] },
+    ],
+  },
+];
 
 type Screen = 'list' | 'build' | 'taking' | 'result';
 
 function uid() { return Date.now() + Math.random(); }
 
 export default function QuizView() {
-  const [quizzes, setQuizzes] = useState<Quiz[]>(() => { const d = load(); return d.length ? d : [SAMPLE]; });
+  const [quizzes, setQuizzes] = useState<Quiz[]>(() => { const d = load(); return d.length ? d : SAMPLE; });
   const [screen, setScreen] = useState<Screen>('list');
   const [activeQuiz, setActiveQuiz] = useState<Quiz | null>(null);
 

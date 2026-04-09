@@ -10,21 +10,52 @@ function load(): Deck[] {
 }
 function save(d: Deck[]) { localStorage.setItem(LS_KEY, JSON.stringify(d)); }
 
-const SAMPLE: Deck = {
-  id: 1, name: 'Sample Deck',
-  createdAt: new Date().toISOString(),
-  cards: [
-    { id: 1, front: 'What is the capital of France?', back: 'Paris', status: 'new' },
-    { id: 2, front: 'What does HTML stand for?', back: 'HyperText Markup Language', status: 'new' },
-    { id: 3, front: 'What is 12 × 8?', back: '96', status: 'new' },
-  ],
-};
+const SAMPLE: Deck[] = [
+  {
+    id: 1, name: 'SQL Basics',
+    createdAt: new Date().toISOString(),
+    cards: [
+      { id: 1, front: 'What does SELECT * FROM users; do?', back: 'Returns all columns and all rows from the "users" table.', status: 'new' },
+      { id: 2, front: 'What is the difference between WHERE and HAVING?', back: 'WHERE filters rows before grouping. HAVING filters groups after GROUP BY.', status: 'new' },
+      { id: 3, front: 'What is an INNER JOIN?', back: 'Returns only rows where there is a match in both tables.', status: 'new' },
+      { id: 4, front: 'What does NULL mean in SQL?', back: 'NULL means the value is unknown or missing. Use IS NULL / IS NOT NULL to check for it.', status: 'new' },
+    ],
+  },
+  {
+    id: 2, name: 'TypeScript Types',
+    createdAt: new Date().toISOString(),
+    cards: [
+      { id: 1, front: 'What is the difference between interface and type in TypeScript?', back: 'Both define shapes. interface is extendable with "extends"; type can represent unions, intersections, and primitives.', status: 'new' },
+      { id: 2, front: 'What does the "?" symbol mean in a TypeScript interface?', back: 'It marks the property as optional — it may be undefined.', status: 'new' },
+      { id: 3, front: 'What is a generic in TypeScript?', back: 'A placeholder type (e.g. <T>) that makes components/functions reusable with different types.', status: 'new' },
+    ],
+  },
+  {
+    id: 3, name: 'Chinese — HSK 1 Vocab',
+    createdAt: new Date().toISOString(),
+    cards: [
+      { id: 1, front: '你好 (nǐ hǎo)', back: 'Hello / Hi', status: 'new' },
+      { id: 2, front: '谢谢 (xiè xiè)', back: 'Thank you', status: 'new' },
+      { id: 3, front: '我 (wǒ)', back: 'I / Me', status: 'new' },
+      { id: 4, front: '是 (shì)', back: 'To be (am / is / are)', status: 'new' },
+    ],
+  },
+  {
+    id: 4, name: 'English — Common Phrases',
+    createdAt: new Date().toISOString(),
+    cards: [
+      { id: 1, front: 'What does "albeit" mean?', back: '"Although" or "even though". e.g. "It was a good result, albeit unexpected."', status: 'new' },
+      { id: 2, front: 'When do you use "affect" vs "effect"?', back: '"Affect" is a verb (to influence). "Effect" is a noun (the result). "The rain affected the game. The effect was a delay."', status: 'new' },
+      { id: 3, front: 'What is a conjunction? Give 3 examples.', back: 'A word that connects clauses or sentences. Examples: and, but, because, although, so.', status: 'new' },
+    ],
+  },
+];
 
 type Screen = 'decks' | 'deck-view' | 'study';
 
 export default function FlashcardView() {
   const [decks, setDecks] = useState<Deck[]>(() => {
-    const d = load(); return d.length ? d : [SAMPLE];
+    const d = load(); return d.length ? d : SAMPLE;
   });
   const [screen, setScreen] = useState<Screen>('decks');
   const [activeDeck, setActiveDeck] = useState<Deck | null>(null);

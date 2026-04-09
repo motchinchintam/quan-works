@@ -871,13 +871,16 @@ body { margin: 0; background: var(--bg); }
 .hub-card.hub-purple { border-top: 3px solid var(--purple); }
 .hub-card.hub-amber  { border-top: 3px solid var(--amber); }
 .hub-footer { text-align: center; font-size: 11px; color: var(--tx3); padding-top: 1rem; border-top: 1px solid var(--border); }
-/* Course banner */
+/* Course list + banners */
+.lh-course-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: .5rem; }
 .lh-course-banner {
   display: flex; align-items: center; justify-content: space-between; gap: 14px;
-  background: linear-gradient(135deg, var(--purple-bg), var(--blue-bg));
-  border: 1px solid var(--purple); border-radius: var(--rl);
-  padding: 1rem 1.25rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+  border: 1px solid var(--border); border-radius: var(--rl);
+  padding: 1rem 1.25rem; flex-wrap: wrap;
 }
+.lh-course-purple { background: linear-gradient(135deg, var(--purple-bg), var(--blue-bg)); border-color: var(--purple); }
+.lh-course-teal   { background: linear-gradient(135deg, var(--teal-bg), var(--green-bg)); border-color: var(--teal); }
+.lh-course-amber  { background: linear-gradient(135deg, var(--amber-bg), var(--coral-bg)); border-color: var(--amber); }
 .lh-course-banner-left { display: flex; align-items: flex-start; gap: 14px; flex: 1; min-width: 0; }
 .lh-course-icon { font-size: 2rem; flex: none; margin-top: 2px; }
 .lh-course-title { font-weight: 700; font-size: 14px; color: var(--tx); margin-bottom: 3px; }
@@ -885,12 +888,15 @@ body { margin: 0; background: var(--bg); }
 .lh-course-levels { display: flex; gap: 8px; flex-wrap: wrap; }
 .lh-level { font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 99px; background: var(--bg2); color: var(--tx2); }
 .lh-course-btn {
-  padding: 9px 20px; border-radius: var(--radius); border: 1.5px solid var(--purple);
-  background: var(--purple); color: #fff; font-weight: 700; font-size: 13px;
-  cursor: pointer; white-space: nowrap; flex: none; transition: opacity .15s;
+  padding: 9px 20px; border-radius: var(--radius); color: #fff;
+  font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap;
+  flex: none; transition: opacity .15s; border: 1.5px solid transparent;
 }
-.lh-course-btn:hover { opacity: .88; }
-.lh-course-btn.loaded { background: var(--green-bg); color: var(--green-tx); border-color: var(--green); cursor: default; }
+.lh-course-btn:hover:not(.loaded) { opacity: .88; }
+.lh-course-btn-purple { background: var(--purple); border-color: var(--purple); }
+.lh-course-btn-teal   { background: var(--teal);   border-color: var(--teal); }
+.lh-course-btn-amber  { background: var(--amber);  border-color: var(--amber); }
+.lh-course-btn.loaded { background: var(--green-bg) !important; color: var(--green-tx) !important; border-color: var(--green) !important; cursor: default; }
 
 .hub-track-chip { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: .65rem 1rem; flex: 1; min-width: 140px; }
 .hub-track-chip span { font-size: 1.4rem; }

@@ -17,40 +17,42 @@ import GoalTrackerView from './views/learning/GoalTrackerView';
 import StudyNotesView from './views/learning/StudyNotesView';
 import TravelHubView from './views/travel/TravelHubView';
 import TravelItineraryView from './views/travel/TravelItineraryView';
+import TripTemplateView from './views/travel/TripTemplateView';
 import './App.css';
 
 type View =
   | 'main'
   | 'hub' | 'testtracker' | 'attendance' | 'kpi' | 'email' | 'datamanager' | 'cohort' | 'printreport' | 'document'
   | 'learnhub' | 'flashcard' | 'quiz' | 'studytimer' | 'goals' | 'studynotes'
-  | 'travelhub' | 'itinerary';
+  | 'travelhub' | 'itinerary' | 'triptemplate';
 
 const NAV: { id: View; label: string; icon: string }[] = [
-  { id: 'main',        label: "Quân's Works",      icon: '🏠' },
-  { id: 'hub',         label: 'Overview',           icon: '📋' },
-  { id: 'testtracker', label: 'Test Tracker',       icon: '📝' },
-  { id: 'attendance',  label: 'Attendance',         icon: '📅' },
-  { id: 'kpi',         label: 'KPI Tracker',        icon: '🎯' },
-  { id: 'email',       label: 'Email Export',       icon: '✉' },
-  { id: 'datamanager', label: 'Data Manager',       icon: '💾' },
-  { id: 'cohort',      label: 'Cohort Dashboard',   icon: '🗂' },
-  { id: 'printreport', label: 'Print Report',       icon: '🖨' },
-  { id: 'document',    label: 'Training Doc',       icon: '📄' },
-  { id: 'learnhub',    label: 'Overview',           icon: '🎓' },
-  { id: 'flashcard',   label: 'Flashcards',         icon: '🃏' },
-  { id: 'quiz',        label: 'Quiz Builder',       icon: '🧠' },
-  { id: 'studytimer',  label: 'Study Timer',        icon: '⏱' },
-  { id: 'goals',       label: 'Learning Goals',     icon: '🎯' },
-  { id: 'studynotes',  label: 'Study Notes',        icon: '📓' },
-  { id: 'travelhub',   label: 'Overview',           icon: '✈️' },
-  { id: 'itinerary',   label: 'Trip Itinerary',     icon: '🗺️' },
+  { id: 'main',         label: "Quân's Works",    icon: '🏠' },
+  { id: 'hub',          label: 'Overview',         icon: '📋' },
+  { id: 'testtracker',  label: 'Test Tracker',     icon: '📝' },
+  { id: 'attendance',   label: 'Attendance',       icon: '📅' },
+  { id: 'kpi',          label: 'KPI Tracker',      icon: '🎯' },
+  { id: 'email',        label: 'Email Export',     icon: '✉' },
+  { id: 'datamanager',  label: 'Data Manager',     icon: '💾' },
+  { id: 'cohort',       label: 'Cohort Dashboard', icon: '🗂' },
+  { id: 'printreport',  label: 'Print Report',     icon: '🖨' },
+  { id: 'document',     label: 'Training Doc',     icon: '📄' },
+  { id: 'learnhub',     label: 'Overview',         icon: '🎓' },
+  { id: 'flashcard',    label: 'Flashcards',       icon: '🃏' },
+  { id: 'quiz',         label: 'Quiz Builder',     icon: '🧠' },
+  { id: 'studytimer',   label: 'Study Timer',      icon: '⏱' },
+  { id: 'goals',        label: 'Learning Goals',   icon: '🎯' },
+  { id: 'studynotes',   label: 'Study Notes',      icon: '📓' },
+  { id: 'travelhub',    label: 'Overview',         icon: '✈️' },
+  { id: 'itinerary',    label: 'Taiwan 2026',      icon: '🇹🇼' },
+  { id: 'triptemplate', label: 'Trip Templates',   icon: '📋' },
 ];
 
 const NAV_GROUPS: { label: string; ids: View[] }[] = [
   { label: "Quân's Works", ids: ['main'] },
   { label: 'Training Hub', ids: ['hub', 'testtracker', 'attendance', 'cohort', 'document', 'kpi', 'printreport', 'email', 'datamanager'] },
   { label: 'Learning Hub', ids: ['learnhub', 'flashcard', 'quiz', 'studytimer', 'goals', 'studynotes'] },
-  { label: 'Travel Hub',   ids: ['travelhub', 'itinerary'] },
+  { label: 'Travel Hub',   ids: ['travelhub', 'itinerary', 'triptemplate'] },
 ];
 
 export default function App() {
@@ -84,24 +86,25 @@ export default function App() {
       </aside>
 
       <main className="main">
-        {view === 'main'        && <MainHubView onNavigate={navigate} />}
-        {view === 'hub'         && <HubView onNavigate={navigate} />}
-        {view === 'testtracker' && <TestTrackerView />}
-        {view === 'attendance'  && <AttendanceGridView />}
-        {view === 'kpi'         && <KPIView />}
-        {view === 'email'       && <EmailExportView />}
-        {view === 'datamanager' && <DataManagerView />}
-        {view === 'cohort'      && <CohortDashboardView />}
-        {view === 'printreport' && <PrintReportView />}
-        {view === 'document'    && <TrainingDocumentView />}
-        {view === 'learnhub'    && <LearningHubView onNavigate={navigate} />}
-        {view === 'flashcard'   && <FlashcardView />}
-        {view === 'quiz'        && <QuizView />}
-        {view === 'studytimer'  && <StudyTimerView />}
-        {view === 'goals'       && <GoalTrackerView />}
-        {view === 'studynotes'  && <StudyNotesView />}
-        {view === 'travelhub'   && <TravelHubView onNavigate={navigate} />}
-        {view === 'itinerary'   && <TravelItineraryView />}
+        {view === 'main'         && <MainHubView onNavigate={navigate} />}
+        {view === 'hub'          && <HubView onNavigate={navigate} />}
+        {view === 'testtracker'  && <TestTrackerView />}
+        {view === 'attendance'   && <AttendanceGridView />}
+        {view === 'kpi'          && <KPIView />}
+        {view === 'email'        && <EmailExportView />}
+        {view === 'datamanager'  && <DataManagerView />}
+        {view === 'cohort'       && <CohortDashboardView />}
+        {view === 'printreport'  && <PrintReportView />}
+        {view === 'document'     && <TrainingDocumentView />}
+        {view === 'learnhub'     && <LearningHubView onNavigate={navigate} />}
+        {view === 'flashcard'    && <FlashcardView />}
+        {view === 'quiz'         && <QuizView />}
+        {view === 'studytimer'   && <StudyTimerView />}
+        {view === 'goals'        && <GoalTrackerView />}
+        {view === 'studynotes'   && <StudyNotesView />}
+        {view === 'travelhub'    && <TravelHubView onNavigate={navigate} />}
+        {view === 'itinerary'    && <TravelItineraryView />}
+        {view === 'triptemplate' && <TripTemplateView />}
       </main>
     </div>
   );

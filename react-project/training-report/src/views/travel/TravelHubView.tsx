@@ -17,10 +17,19 @@ const TRAVEL_TOOLS: ToolCard[] = [
     view: 'itinerary',
     icon: '🗺️',
     name: 'Trip Itinerary',
-    badge: 'Planning',
+    badge: 'Taiwan 2026',
     badgeColor: 'teal',
-    desc: 'Day-by-day travel plans, schedules, and activity notes for each trip.',
+    desc: 'Day-by-day itinerary for Solo Taiwan Trip — Apr 29 to May 3, 2026. Includes flights, sightseeing, food stops, and calendar export.',
     color: 'teal',
+  },
+  {
+    view: 'triptemplate',
+    icon: '📋',
+    name: 'Trip Templates',
+    badge: 'Planning',
+    badgeColor: 'blue',
+    desc: 'Create and save itinerary templates for future trips. Add days, activities, times, and export to Apple or Google Calendar.',
+    color: 'blue',
   },
 ];
 

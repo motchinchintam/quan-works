@@ -1204,3 +1204,13 @@ body { margin: 0; background: var(--bg); }
   .tpl-act-row { flex-direction: column; align-items: flex-start; }
   .tpl-input-time, .tpl-input-text, .tpl-input-notes, .tpl-select { width: 100%; }
 }
+
+/* Itinerary — Accommodation card */
+.itin-accom-card { border: 1px solid var(--teal); border-radius: var(--radius); margin-bottom: 1.25rem; overflow: hidden; }
+.itin-accom-toggle { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: .75rem 1rem; background: var(--teal-bg); border: none; cursor: pointer; font-size: 13px; font-weight: 700; color: var(--teal-tx); text-align: left; gap: 8px; }
+.itin-accom-toggle:hover { background: var(--teal); color: #fff; }
+.itin-accom-chevron { flex: none; font-size: 10px; }
+.itin-accom-body { padding: .85rem 1rem; display: flex; flex-direction: column; gap: 7px; background: var(--surface); }
+.itin-accom-row { display: flex; gap: 10px; font-size: 13px; color: var(--tx2); line-height: 1.5; }
+.itin-accom-row span:first-child { flex: none; width: 20px; text-align: center; }
+.itin-accom-note { font-size: 12px; color: var(--teal-tx); background: var(--teal-bg); border-radius: 6px; padding: 7px 10px; line-height: 1.55; margin-top: 3px; }

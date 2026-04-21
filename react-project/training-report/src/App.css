@@ -1341,7 +1341,7 @@ body { margin: 0; background: var(--bg); }
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--hub-accent, #C8FF00) 4%, transparent), transparent 60%);
+  background: linear-gradient(135deg, rgba(200,255,0,0.06), transparent 60%);
   opacity: 0;
   transition: opacity .2s;
 }

@@ -41,12 +41,13 @@ interface HubGroup {
   label: string;
   icon: string;
   color: string;
+  section: 'works' | 'personal';
   tools: { id: View; label: string; icon: string }[];
 }
 
 const HUB_GROUPS: HubGroup[] = [
   {
-    id: 'hub', label: 'Training', icon: '📊', color: 'blue',
+    id: 'hub', label: 'Training', icon: '📊', color: 'blue', section: 'works',
     tools: [
       { id: 'hub',          label: 'Overview',         icon: '📋' },
       { id: 'testtracker',  label: 'Test Tracker',     icon: '📝' },
@@ -60,7 +61,7 @@ const HUB_GROUPS: HubGroup[] = [
     ],
   },
   {
-    id: 'learnhub', label: 'Learning', icon: '🎓', color: 'purple',
+    id: 'learnhub', label: 'Learning', icon: '🎓', color: 'purple', section: 'works',
     tools: [
       { id: 'learnhub',   label: 'Overview',    icon: '🎓' },
       { id: 'flashcard',  label: 'Flashcards',  icon: '🃏' },
@@ -71,7 +72,7 @@ const HUB_GROUPS: HubGroup[] = [
     ],
   },
   {
-    id: 'travelhub', label: 'Travel', icon: '✈️', color: 'teal',
+    id: 'travelhub', label: 'Travel', icon: '✈️', color: 'teal', section: 'personal',
     tools: [
       { id: 'travelhub',    label: 'Overview',    icon: '✈️' },
       { id: 'itinerary',    label: 'Taiwan 2026', icon: '🇹🇼' },
@@ -79,7 +80,7 @@ const HUB_GROUPS: HubGroup[] = [
     ],
   },
   {
-    id: 'financehub', label: 'Finance', icon: '💰', color: 'amber',
+    id: 'financehub', label: 'Finance', icon: '💰', color: 'amber', section: 'personal',
     tools: [
       { id: 'financehub', label: 'Overview',  icon: '💰' },
       { id: 'expenses',   label: 'Expenses',  icon: '💸' },
@@ -88,7 +89,7 @@ const HUB_GROUPS: HubGroup[] = [
     ],
   },
   {
-    id: 'journalhub', label: 'Journal', icon: '📔', color: 'coral',
+    id: 'journalhub', label: 'Journal', icon: '📔', color: 'coral', section: 'personal',
     tools: [
       { id: 'journalhub',   label: 'Overview',  icon: '📔' },
       { id: 'dailyjournal', label: 'Journal',   icon: '✍️' },
@@ -97,6 +98,9 @@ const HUB_GROUPS: HubGroup[] = [
     ],
   },
 ];
+
+const WORKS_GROUPS    = HUB_GROUPS.filter(g => g.section === 'works');
+const PERSONAL_GROUPS = HUB_GROUPS.filter(g => g.section === 'personal');
 
 function getActiveHub(view: View): HubGroup | null {
   if (view === 'main') return null;
@@ -124,7 +128,20 @@ export default function App() {
           </button>
 
           <nav className="topnav-hubs">
-            {HUB_GROUPS.map(g => (
+            <span className="topnav-section-label">Works</span>
+            {WORKS_GROUPS.map(g => (
+              <button
+                key={g.id}
+                className={`topnav-hub ${activeHub?.id === g.id ? `active hub-active-${g.color}` : ''}`}
+                onClick={() => navigate(g.id)}
+              >
+                <span className="topnav-hub-icon">{g.icon}</span>
+                <span>{g.label}</span>
+              </button>
+            ))}
+            <div className="topnav-sep" />
+            <span className="topnav-section-label">Personal</span>
+            {PERSONAL_GROUPS.map(g => (
               <button
                 key={g.id}
                 className={`topnav-hub ${activeHub?.id === g.id ? `active hub-active-${g.color}` : ''}`}
@@ -145,7 +162,21 @@ export default function App() {
         {mobileMenuOpen && (
           <div className="topnav-mobile-menu">
             <button className="mobile-menu-item" onClick={() => navigate('main')}>🏠 Home</button>
-            {HUB_GROUPS.map(g => (
+            <div className="mobile-menu-section-label">Works</div>
+            {WORKS_GROUPS.map(g => (
+              <div key={g.id} className="mobile-menu-group">
+                <button className={`mobile-menu-hub ${activeHub?.id === g.id ? 'active' : ''}`} onClick={() => navigate(g.id)}>
+                  {g.icon} {g.label}
+                </button>
+                {activeHub?.id === g.id && g.tools.map(t => (
+                  <button key={t.id} className={`mobile-menu-tool ${view === t.id ? 'active' : ''}`} onClick={() => navigate(t.id)}>
+                    {t.icon} {t.label}
+                  </button>
+                ))}
+              </div>
+            ))}
+            <div className="mobile-menu-section-label">Personal</div>
+            {PERSONAL_GROUPS.map(g => (
               <div key={g.id} className="mobile-menu-group">
                 <button className={`mobile-menu-hub ${activeHub?.id === g.id ? 'active' : ''}`} onClick={() => navigate(g.id)}>
                   {g.icon} {g.label}

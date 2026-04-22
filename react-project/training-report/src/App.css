@@ -1552,6 +1552,24 @@ body { margin: 0; background: var(--bg); }
   .hub-active-coral  { background: #4a1a0c !important; }
 }
 
+/* Section labels & separator inside topnav-hubs */
+.topnav-section-label {
+  font-size: 10px; font-weight: 800; color: var(--tx3);
+  text-transform: uppercase; letter-spacing: .1em;
+  padding: 0 4px; flex-shrink: 0; align-self: center;
+  user-select: none;
+}
+.topnav-sep {
+  width: 1px; height: 20px; background: var(--border2);
+  margin: 0 6px; flex-shrink: 0; align-self: center;
+}
+/* Mobile section label */
+.mobile-menu-section-label {
+  font-size: 10px; font-weight: 800; color: var(--tx3);
+  text-transform: uppercase; letter-spacing: .1em;
+  padding: 10px 12px 4px; user-select: none;
+}
+
 .topnav-hamburger {
   display: none; background: none; border: none; font-size: 1.2rem;
   cursor: pointer; color: var(--tx); padding: 6px; border-radius: 6px;

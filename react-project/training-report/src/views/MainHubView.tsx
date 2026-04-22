@@ -60,28 +60,80 @@ const HUBS: HubCard[] = [
   },
 ];
 
+const BOOKS = [
+  { title: 'The Great Gatsby',        author: 'F. Scott Fitzgerald', emoji: '🟡' },
+  { title: 'The Silence of the Lambs', author: 'Thomas Harris',       emoji: '🔴' },
+];
+
+const NEWS = [
+  { name: 'ZNews',      url: 'https://znews.vn',      icon: '📰', color: '#E53935' },
+  { name: 'VnExpress',  url: 'https://vnexpress.net', icon: '📖', color: '#1565C0' },
+];
+
 export default function MainHubView({ onNavigate }: MainHubViewProps) {
-  const bgUrl = `${import.meta.env.BASE_URL}sloth-bg.jpg`;
+  const base = import.meta.env.BASE_URL;
   return (
-    <div className="lp-page" style={{ backgroundImage: `url(${bgUrl})` }}>
+    <div className="lp-page" style={{ backgroundImage: `url(${base}sloth-bg.jpg)` }}>
     <div className="lp-inner">
 
       {/* ── Hero ── */}
       <div className="lp-hero">
-        <div className="lp-available">
-          <span className="lp-dot" />
-          Software QA Engineer · Language Learner · Solo Traveler
+
+        {/* Left: info */}
+        <div className="lp-hero-left">
+          <div className="lp-available">
+            <span className="lp-dot" />
+            Software QA Engineer · Language Learner · Solo Traveler
+          </div>
+          <h1 className="lp-h1">
+            Quân's<br />
+            <span className="lp-h1-accent">Works</span>
+          </h1>
+          <p className="lp-sub">
+            A personal workspace built from scratch — tools for work, study, and life, all saved in your browser.
+          </p>
+
+          {/* Social links */}
+          <div className="lp-socials">
+            <a
+              href="https://www.facebook.com/availableeeeee/"
+              target="_blank" rel="noopener noreferrer"
+              className="lp-social-btn lp-social-fb"
+            >
+              <span className="lp-social-icon">f</span> Facebook
+            </a>
+            <a
+              href="https://www.instagram.com/motchinchintam"
+              target="_blank" rel="noopener noreferrer"
+              className="lp-social-btn lp-social-ig"
+            >
+              <span className="lp-social-icon">◎</span> Instagram
+            </a>
+            <a
+              href="https://zalo.me/0916366443"
+              target="_blank" rel="noopener noreferrer"
+              className="lp-social-btn lp-social-zalo"
+            >
+              <span className="lp-social-icon">Z</span> Zalo
+            </a>
+          </div>
+
+          <button className="lp-cta" onClick={() => onNavigate('hub')}>
+            Explore Tools <span className="lp-cta-arrow">→</span>
+          </button>
         </div>
-        <h1 className="lp-h1">
-          Quân's<br />
-          <span className="lp-h1-accent">Works</span>
-        </h1>
-        <p className="lp-sub">
-          A personal workspace built from scratch — tools for work, study, and life, all saved in your browser.
-        </p>
-        <button className="lp-cta" onClick={() => onNavigate('hub')}>
-          Explore Tools <span className="lp-cta-arrow">→</span>
-        </button>
+
+        {/* Right: avatar */}
+        <div className="lp-hero-right">
+          <div className="lp-avatar-wrap">
+            <img
+              src={`${base}avatar.jpg`}
+              alt="Quân"
+              className="lp-avatar"
+              onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+            />
+          </div>
+        </div>
       </div>
 
       {/* ── Divider ── */}
@@ -117,11 +169,57 @@ export default function MainHubView({ onNavigate }: MainHubViewProps) {
                 {hub.tools.map(t => <span key={t} className="lp-hub-chip">{t}</span>)}
               </div>
             </div>
-            <div className="lp-hub-enter">
-              Enter <span>→</span>
-            </div>
+            <div className="lp-hub-enter">Enter <span>→</span></div>
           </div>
         ))}
+      </div>
+
+      {/* ── Personal sections ── */}
+      <div className="lp-divider" style={{ marginTop: '2rem' }}>
+        <span className="lp-divider-label">// PERSONAL</span>
+        <div className="lp-divider-line" />
+      </div>
+
+      <div className="lp-extras">
+
+        {/* Favourite Books */}
+        <div className="lp-extra-card">
+          <div className="lp-extra-heading">📚 Favourite Books</div>
+          <div className="lp-book-list">
+            {BOOKS.map(b => (
+              <div key={b.title} className="lp-book-row">
+                <span className="lp-book-dot" style={{ background: b.emoji === '🟡' ? '#F59E0B' : '#EF4444' }} />
+                <div>
+                  <div className="lp-book-title">{b.title}</div>
+                  <div className="lp-book-author">{b.author}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* News */}
+        <div className="lp-extra-card">
+          <div className="lp-extra-heading">📰 Daily News</div>
+          <p className="lp-extra-sub">Quick links to trusted Vietnamese news sources</p>
+          <div className="lp-news-list">
+            {NEWS.map(n => (
+              <a
+                key={n.name}
+                href={n.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="lp-news-btn"
+                style={{ '--news-color': n.color } as React.CSSProperties}
+              >
+                <span>{n.icon}</span>
+                <span>{n.name}</span>
+                <span className="lp-news-arrow">↗</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
       </div>
 
       {/* ── Footer ── */}

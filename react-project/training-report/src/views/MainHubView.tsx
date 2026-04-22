@@ -145,7 +145,7 @@ export default function MainHubView({ onNavigate }: MainHubViewProps) {
         {/* RIGHT — photo panel */}
         <div className="lp-panel-right">
           <img
-            src={`${base}newphoto.png`}
+            src={`${base}photo6.jpg`}
             alt="Quân"
             className="lp-photo"
             onError={e => { (e.currentTarget as HTMLImageElement).style.visibility = 'hidden'; }}

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LangProvider, useLang, type Lang } from './i18n/index';
+import NavSearch from './components/NavSearch';
 
 // Portfolio pages
 import HomeView     from './views/portfolio/HomeView';
@@ -116,15 +117,33 @@ function getActiveHub(view: View): HubGroup | null {
   return HUB_GROUPS.find(g => g.tools.some(t => t.id === view)) ?? null;
 }
 
+function readHash(): View {
+  const hash = window.location.hash.replace(/^#\/?/, '').split('?')[0];
+  return (PORTFOLIO_VIEWS.has(hash as View) ? hash : 'home') as View;
+}
+
 function AppInner() {
   const { lang, setLang, s } = useLang();
-  const [view, setView] = useState<View>('home');
+  const [view, setView] = useState<View>(readHash);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  /* sync URL hash → view on browser back/forward */
+  useEffect(() => {
+    function onHashChange() { setView(readHash()); window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior }); }
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
   function navigate(v: string) {
-    setView(v as View);
+    const newView = v as View;
+    setView(newView);
     setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    /* update URL hash for portfolio pages so links are shareable */
+    if (PORTFOLIO_VIEWS.has(newView)) {
+      const hash = newView === 'home' ? '' : `#${newView}`;
+      window.history.pushState(null, '', hash || window.location.pathname);
+    }
   }
 
   const isPortfolio = PORTFOLIO_VIEWS.has(view);
@@ -169,6 +188,9 @@ function AppInner() {
               </button>
             ))}
           </nav>
+
+          {/* Search */}
+          <NavSearch onNavigate={navigate} />
 
           {/* Language switcher */}
           <div className="topnav-lang-switcher">

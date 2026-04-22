@@ -1277,21 +1277,23 @@ body { margin: 0; background: var(--bg); }
 .lp-panel-right {
   background: #111D0E;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: 2rem 1.5rem;
 }
 
-/* Photo fills the right panel */
+/* Photo — contained, smaller, original colors */
 .lp-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: auto;
+  height: 85%;
+  max-height: 440px;
+  max-width: 85%;
+  object-fit: contain;
   object-position: center top;
   display: block;
-  /* Blend white-bg photos into dark panel */
-  mix-blend-mode: luminosity;
-  filter: contrast(1.05);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
 }
 
 /* "Hi, I am" greeting */

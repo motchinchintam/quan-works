@@ -1,35 +1,45 @@
 import { useState } from 'react';
-import MainHubView from './views/MainHubView';
-import HubView from './views/HubView';
-import TestTrackerView from './views/TestTrackerView';
+
+// Portfolio pages
+import HomeView     from './views/portfolio/HomeView';
+import WorkView     from './views/portfolio/WorkView';
+import AboutView    from './views/portfolio/AboutView';
+import InsightsView from './views/portfolio/InsightsView';
+import ContactView  from './views/portfolio/ContactView';
+
+// Apps / tool views
+import MainHubView        from './views/MainHubView';
+import HubView            from './views/HubView';
+import TestTrackerView    from './views/TestTrackerView';
 import AttendanceGridView from './views/AttendanceGridView';
-import KPIView from './views/KPIView';
-import EmailExportView from './views/EmailExportView';
-import DataManagerView from './views/DataManagerView';
+import KPIView            from './views/KPIView';
+import EmailExportView    from './views/EmailExportView';
+import DataManagerView    from './views/DataManagerView';
 import CohortDashboardView from './views/CohortDashboardView';
-import PrintReportView from './views/PrintReportView';
+import PrintReportView    from './views/PrintReportView';
 import TrainingDocumentView from './views/TrainingDocumentView';
-import LearningHubView from './views/learning/LearningHubView';
-import FlashcardView from './views/learning/FlashcardView';
-import QuizView from './views/learning/QuizView';
-import StudyTimerView from './views/learning/StudyTimerView';
-import GoalTrackerView from './views/learning/GoalTrackerView';
-import StudyNotesView from './views/learning/StudyNotesView';
-import TravelHubView from './views/travel/TravelHubView';
+import LearningHubView    from './views/learning/LearningHubView';
+import FlashcardView      from './views/learning/FlashcardView';
+import QuizView           from './views/learning/QuizView';
+import StudyTimerView     from './views/learning/StudyTimerView';
+import GoalTrackerView    from './views/learning/GoalTrackerView';
+import StudyNotesView     from './views/learning/StudyNotesView';
+import TravelHubView      from './views/travel/TravelHubView';
 import TravelItineraryView from './views/travel/TravelItineraryView';
-import TripTemplateView from './views/travel/TripTemplateView';
-import FinanceHubView from './views/finance/FinanceHubView';
+import TripTemplateView   from './views/travel/TripTemplateView';
+import FinanceHubView     from './views/finance/FinanceHubView';
 import ExpenseTrackerView from './views/finance/ExpenseTrackerView';
-import TripBudgetView from './views/finance/TripBudgetView';
-import SavingsGoalsView from './views/finance/SavingsGoalsView';
-import JournalHubView from './views/journal/JournalHubView';
-import DailyJournalView from './views/journal/DailyJournalView';
-import MoodTrackerView from './views/journal/MoodTrackerView';
-import WeeklyReviewView from './views/journal/WeeklyReviewView';
+import TripBudgetView     from './views/finance/TripBudgetView';
+import SavingsGoalsView   from './views/finance/SavingsGoalsView';
+import JournalHubView     from './views/journal/JournalHubView';
+import DailyJournalView   from './views/journal/DailyJournalView';
+import MoodTrackerView    from './views/journal/MoodTrackerView';
+import WeeklyReviewView   from './views/journal/WeeklyReviewView';
 import './App.css';
 
 type View =
-  | 'main'
+  | 'home' | 'work' | 'about' | 'insights' | 'contact'          // Portfolio
+  | 'apps'                                                         // Tools dashboard
   | 'hub' | 'testtracker' | 'attendance' | 'kpi' | 'email' | 'datamanager' | 'cohort' | 'printreport' | 'document'
   | 'learnhub' | 'flashcard' | 'quiz' | 'studytimer' | 'goals' | 'studynotes'
   | 'travelhub' | 'itinerary' | 'triptemplate'
@@ -41,38 +51,37 @@ interface HubGroup {
   label: string;
   icon: string;
   color: string;
-  section: 'works' | 'personal';
   tools: { id: View; label: string; icon: string }[];
 }
 
 const HUB_GROUPS: HubGroup[] = [
   {
-    id: 'hub', label: 'Training', icon: '📊', color: 'blue', section: 'works',
+    id: 'hub', label: 'Training', icon: '📊', color: 'blue',
     tools: [
-      { id: 'hub',          label: 'Overview',         icon: '📋' },
-      { id: 'testtracker',  label: 'Test Tracker',     icon: '📝' },
-      { id: 'attendance',   label: 'Attendance',       icon: '📅' },
-      { id: 'kpi',          label: 'KPI',              icon: '🎯' },
-      { id: 'cohort',       label: 'Cohort',           icon: '🗂' },
-      { id: 'document',     label: 'Doc',              icon: '📄' },
-      { id: 'printreport',  label: 'Print',            icon: '🖨' },
-      { id: 'email',        label: 'Email',            icon: '✉' },
-      { id: 'datamanager',  label: 'Data',             icon: '💾' },
+      { id: 'hub',         label: 'Overview',    icon: '📋' },
+      { id: 'testtracker', label: 'Test Tracker', icon: '📝' },
+      { id: 'attendance',  label: 'Attendance',  icon: '📅' },
+      { id: 'kpi',         label: 'KPI',         icon: '🎯' },
+      { id: 'cohort',      label: 'Cohort',      icon: '🗂' },
+      { id: 'document',    label: 'Doc',         icon: '📄' },
+      { id: 'printreport', label: 'Print',       icon: '🖨' },
+      { id: 'email',       label: 'Email',       icon: '✉' },
+      { id: 'datamanager', label: 'Data',        icon: '💾' },
     ],
   },
   {
-    id: 'learnhub', label: 'Learning', icon: '🎓', color: 'purple', section: 'works',
+    id: 'learnhub', label: 'Learning', icon: '🎓', color: 'purple',
     tools: [
-      { id: 'learnhub',   label: 'Overview',    icon: '🎓' },
-      { id: 'flashcard',  label: 'Flashcards',  icon: '🃏' },
-      { id: 'quiz',       label: 'Quiz',        icon: '🧠' },
-      { id: 'studytimer', label: 'Timer',       icon: '⏱' },
-      { id: 'goals',      label: 'Goals',       icon: '🎯' },
-      { id: 'studynotes', label: 'Notes',       icon: '📓' },
+      { id: 'learnhub',   label: 'Overview',   icon: '🎓' },
+      { id: 'flashcard',  label: 'Flashcards', icon: '🃏' },
+      { id: 'quiz',       label: 'Quiz',       icon: '🧠' },
+      { id: 'studytimer', label: 'Timer',      icon: '⏱' },
+      { id: 'goals',      label: 'Goals',      icon: '🎯' },
+      { id: 'studynotes', label: 'Notes',      icon: '📓' },
     ],
   },
   {
-    id: 'travelhub', label: 'Travel', icon: '✈️', color: 'teal', section: 'personal',
+    id: 'travelhub', label: 'Travel', icon: '✈️', color: 'teal',
     tools: [
       { id: 'travelhub',    label: 'Overview',    icon: '✈️' },
       { id: 'itinerary',    label: 'Taiwan 2026', icon: '🇹🇼' },
@@ -80,80 +89,93 @@ const HUB_GROUPS: HubGroup[] = [
     ],
   },
   {
-    id: 'financehub', label: 'Finance', icon: '💰', color: 'amber', section: 'personal',
+    id: 'financehub', label: 'Finance', icon: '💰', color: 'amber',
     tools: [
-      { id: 'financehub', label: 'Overview',  icon: '💰' },
-      { id: 'expenses',   label: 'Expenses',  icon: '💸' },
-      { id: 'tripbudget', label: 'Budget',    icon: '🧾' },
-      { id: 'savings',    label: 'Savings',   icon: '🏦' },
+      { id: 'financehub', label: 'Overview', icon: '💰' },
+      { id: 'expenses',   label: 'Expenses', icon: '💸' },
+      { id: 'tripbudget', label: 'Budget',   icon: '🧾' },
+      { id: 'savings',    label: 'Savings',  icon: '🏦' },
     ],
   },
   {
-    id: 'journalhub', label: 'Journal', icon: '📔', color: 'coral', section: 'personal',
+    id: 'journalhub', label: 'Journal', icon: '📔', color: 'coral',
     tools: [
-      { id: 'journalhub',   label: 'Overview',  icon: '📔' },
-      { id: 'dailyjournal', label: 'Journal',   icon: '✍️' },
-      { id: 'moodtracker',  label: 'Mood',      icon: '🌡️' },
-      { id: 'weeklyreview', label: 'Review',    icon: '📊' },
+      { id: 'journalhub',   label: 'Overview', icon: '📔' },
+      { id: 'dailyjournal', label: 'Journal',  icon: '✍️' },
+      { id: 'moodtracker',  label: 'Mood',     icon: '🌡️' },
+      { id: 'weeklyreview', label: 'Review',   icon: '📊' },
     ],
   },
 ];
 
-const WORKS_GROUPS    = HUB_GROUPS.filter(g => g.section === 'works');
-const PERSONAL_GROUPS = HUB_GROUPS.filter(g => g.section === 'personal');
+const PORTFOLIO_VIEWS = new Set<View>(['home', 'work', 'about', 'insights', 'contact']);
+const PORTFOLIO_NAV   = [
+  { id: 'work'     as const, label: 'Work'     },
+  { id: 'about'    as const, label: 'About'    },
+  { id: 'insights' as const, label: 'Insights' },
+  { id: 'contact'  as const, label: 'Contact'  },
+];
 
 function getActiveHub(view: View): HubGroup | null {
-  if (view === 'main') return null;
+  if (PORTFOLIO_VIEWS.has(view) || view === 'apps') return null;
   return HUB_GROUPS.find(g => g.tools.some(t => t.id === view)) ?? null;
 }
 
 export default function App() {
-  const [view, setView] = useState<View>('main');
+  const [view, setView] = useState<View>('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  function navigate(v: string) { setView(v as View); setMobileMenuOpen(false); }
+  function navigate(v: string) {
+    setView(v as View);
+    setMobileMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+  }
 
-  const isLanding = view === 'main';
-  const activeHub = getActiveHub(view);
+  const isPortfolio = PORTFOLIO_VIEWS.has(view);
+  const isApps      = view === 'apps';
+  const activeHub   = getActiveHub(view);
 
   return (
-    <div className={`app-v2 ${isLanding ? 'app--landing' : ''}`}>
+    <div className={`app-v2${isApps ? ' app--landing' : ''}`}>
 
-      {/* ── Top Navigation ── */}
+      {/* ── Navigation ─────────────────────────────────────────────────── */}
       <header className="topnav">
         <div className="topnav-inner">
-          <button className="topnav-brand" onClick={() => navigate('main')}>
+
+          {/* Brand */}
+          <button className="topnav-brand" onClick={() => navigate('home')}>
             <span className="topnav-brand-icon">✦</span>
-            <span className="topnav-brand-name">Quân's Works</span>
+            <span className="topnav-brand-name">Quân</span>
           </button>
 
+          {/* Portfolio nav links */}
           <nav className="topnav-hubs">
-            <span className="topnav-section-label">Works</span>
-            {WORKS_GROUPS.map(g => (
+            {PORTFOLIO_NAV.map(({ id, label }) => (
               <button
-                key={g.id}
-                className={`topnav-hub ${activeHub?.id === g.id ? `active hub-active-${g.color}` : ''}`}
-                onClick={() => navigate(g.id)}
+                key={id}
+                className={`topnav-hub topnav-plink${view === id ? ' plink-active' : ''}`}
+                onClick={() => navigate(id)}
               >
-                <span className="topnav-hub-icon">{g.icon}</span>
-                <span>{g.label}</span>
-              </button>
-            ))}
-            <div className="topnav-sep" />
-            <span className="topnav-section-label">Personal</span>
-            {PERSONAL_GROUPS.map(g => (
-              <button
-                key={g.id}
-                className={`topnav-hub ${activeHub?.id === g.id ? `active hub-active-${g.color}` : ''}`}
-                onClick={() => navigate(g.id)}
-              >
-                <span className="topnav-hub-icon">{g.icon}</span>
-                <span>{g.label}</span>
+                {label}
               </button>
             ))}
           </nav>
 
-          <button className="topnav-hamburger" onClick={() => setMobileMenuOpen(o => !o)} aria-label="Menu">
+          {/* Apps access button */}
+          <button
+            className={`topnav-apps-btn${!isPortfolio ? ' active' : ''}`}
+            onClick={() => navigate('apps')}
+            title="Personal productivity apps"
+          >
+            Apps ⊞
+          </button>
+
+          {/* Mobile hamburger */}
+          <button
+            className="topnav-hamburger"
+            onClick={() => setMobileMenuOpen(o => !o)}
+            aria-label="Menu"
+          >
             {mobileMenuOpen ? '✕' : '☰'}
           </button>
         </div>
@@ -161,28 +183,25 @@ export default function App() {
         {/* Mobile dropdown */}
         {mobileMenuOpen && (
           <div className="topnav-mobile-menu">
-            <button className="mobile-menu-item" onClick={() => navigate('main')}>🏠 Home</button>
-            <div className="mobile-menu-section-label">Works</div>
-            {WORKS_GROUPS.map(g => (
-              <div key={g.id} className="mobile-menu-group">
-                <button className={`mobile-menu-hub ${activeHub?.id === g.id ? 'active' : ''}`} onClick={() => navigate(g.id)}>
-                  {g.icon} {g.label}
-                </button>
-                {activeHub?.id === g.id && g.tools.map(t => (
-                  <button key={t.id} className={`mobile-menu-tool ${view === t.id ? 'active' : ''}`} onClick={() => navigate(t.id)}>
-                    {t.icon} {t.label}
-                  </button>
-                ))}
-              </div>
+            <button className="mobile-menu-item" onClick={() => navigate('home')}>🏠 Home</button>
+            {PORTFOLIO_NAV.map(({ id, label }) => (
+              <button key={id} className="mobile-menu-item" onClick={() => navigate(id)}>{label}</button>
             ))}
-            <div className="mobile-menu-section-label">Personal</div>
-            {PERSONAL_GROUPS.map(g => (
+            <div className="mobile-menu-section-label">Apps</div>
+            {HUB_GROUPS.map(g => (
               <div key={g.id} className="mobile-menu-group">
-                <button className={`mobile-menu-hub ${activeHub?.id === g.id ? 'active' : ''}`} onClick={() => navigate(g.id)}>
+                <button
+                  className={`mobile-menu-hub${activeHub?.id === g.id ? ' active' : ''}`}
+                  onClick={() => navigate(g.id)}
+                >
                   {g.icon} {g.label}
                 </button>
                 {activeHub?.id === g.id && g.tools.map(t => (
-                  <button key={t.id} className={`mobile-menu-tool ${view === t.id ? 'active' : ''}`} onClick={() => navigate(t.id)}>
+                  <button
+                    key={t.id}
+                    className={`mobile-menu-tool${view === t.id ? ' active' : ''}`}
+                    onClick={() => navigate(t.id)}
+                  >
                     {t.icon} {t.label}
                   </button>
                 ))}
@@ -191,14 +210,14 @@ export default function App() {
           </div>
         )}
 
-        {/* Sub-nav for active hub */}
+        {/* Tool sub-nav (only when inside a specific tool) */}
         {activeHub && (
           <div className={`subnav subnav-${activeHub.color}`}>
             <div className="subnav-inner">
               {activeHub.tools.map(t => (
                 <button
                   key={t.id}
-                  className={`subnav-item ${view === t.id ? 'active' : ''}`}
+                  className={`subnav-item${view === t.id ? ' active' : ''}`}
                   onClick={() => navigate(t.id)}
                 >
                   <span>{t.icon}</span>
@@ -210,9 +229,16 @@ export default function App() {
         )}
       </header>
 
-      {/* ── Page Content ── */}
-      <main className="main-content">
-        {view === 'main'         && <MainHubView onNavigate={navigate} />}
+      {/* ── Page Content ────────────────────────────────────────────────── */}
+      <main className={isPortfolio ? 'pt-main' : 'main-content'}>
+        {view === 'home'        && <HomeView     onNavigate={navigate} />}
+        {view === 'work'        && <WorkView     onNavigate={navigate} />}
+        {view === 'about'       && <AboutView    onNavigate={navigate} />}
+        {view === 'insights'    && <InsightsView onNavigate={navigate} />}
+        {view === 'contact'     && <ContactView  onNavigate={navigate} />}
+        {view === 'apps'        && <MainHubView  onNavigate={navigate} />}
+
+        {/* Existing tool views */}
         {view === 'hub'          && <HubView onNavigate={navigate} />}
         {view === 'testtracker'  && <TestTrackerView />}
         {view === 'attendance'   && <AttendanceGridView />}

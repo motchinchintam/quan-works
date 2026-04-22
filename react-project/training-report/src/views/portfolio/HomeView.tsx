@@ -4,6 +4,36 @@ interface HomeViewProps { onNavigate: (v: string) => void; }
 
 const FEATURED = PROJECTS.slice(0, 3);
 
+const SOCIAL_POSTS = [
+  {
+    id: 1,
+    platform: 'instagram',
+    image: '',
+    caption: 'Great session with the team today — wrapped up a full onboarding module for new sales reps. Watching people click with a concept they struggled with an hour ago never gets old. 🙌',
+    date: 'Apr 2026',
+    likes: 47,
+    link: 'https://www.instagram.com/motchinchintam/',
+  },
+  {
+    id: 2,
+    platform: 'facebook',
+    image: '',
+    caption: 'Finished reading "The Coaching Habit" — some genuinely practical frameworks in there for anyone who leads or trains people. Highly recommend if you work in L&D or HR.',
+    date: 'Mar 2026',
+    likes: 62,
+    link: 'https://www.facebook.com/motchinchintam',
+  },
+  {
+    id: 3,
+    platform: 'instagram',
+    image: '',
+    caption: 'Sometimes the best training tool is a conversation. Asked 3 simple questions in today\'s coaching session and the rep figured out the answer themselves. That\'s the goal every time.',
+    date: 'Mar 2026',
+    likes: 38,
+    link: 'https://www.instagram.com/motchinchintam/',
+  },
+];
+
 export default function HomeView({ onNavigate }: HomeViewProps) {
   const base = import.meta.env.BASE_URL;
 
@@ -13,6 +43,7 @@ export default function HomeView({ onNavigate }: HomeViewProps) {
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="pt-hero">
         <div className="pt-hero-text">
+          <p className="pt-hero-greeting">Hi, I'm Quân 👋</p>
           <span className="pt-eyebrow">HR &amp; Sales Training · HRD</span>
           <h1 className="pt-hero-headline">
             I help teams grow through systems, training, and structured execution.
@@ -28,7 +59,7 @@ export default function HomeView({ onNavigate }: HomeViewProps) {
         </div>
         <div className="pt-hero-visual">
           <img
-            src={`${base}newphoto.png`}
+            src={`${base}photo6.jpg`}
             alt="Nguyen Thanh Quan"
             className="pt-hero-photo"
             onError={e => { (e.currentTarget as HTMLImageElement).style.opacity = '0'; }}
@@ -70,14 +101,20 @@ export default function HomeView({ onNavigate }: HomeViewProps) {
               better client engagement, or scaling a team across multiple cities — I approach
               every problem by asking what the root cause is, not just what the symptom looks like.
             </p>
+            {/* Inline stats */}
+            <div className="pt-snap-stats">
+              <div className="pt-snap-stat"><span className="pt-abs-num">6+</span><span className="pt-abs-label">Yrs Exp</span></div>
+              <div className="pt-snap-stat"><span className="pt-abs-num">100+</span><span className="pt-abs-label">Trained</span></div>
+              <div className="pt-snap-stat"><span className="pt-abs-num">4K+</span><span className="pt-abs-label">Accounts</span></div>
+              <div className="pt-snap-stat"><span className="pt-abs-num">85%+</span><span className="pt-abs-label">Pass Rate</span></div>
+            </div>
             <button className="pt-link-btn" onClick={() => onNavigate('about')}>Full About →</button>
           </div>
+          {/* 2-photo collage */}
           <div className="pt-about-snap-visual">
-            <div className="pt-about-snap-block">
-              <div className="pt-about-snap-stat"><span className="pt-abs-num">6+</span><span className="pt-abs-label">Years Experience</span></div>
-              <div className="pt-about-snap-stat"><span className="pt-abs-num">100+</span><span className="pt-abs-label">Staff Trained</span></div>
-              <div className="pt-about-snap-stat"><span className="pt-abs-num">4K+</span><span className="pt-abs-label">Merchant Accounts</span></div>
-              <div className="pt-about-snap-stat"><span className="pt-abs-num">85%+</span><span className="pt-abs-label">Avg Pass Rate</span></div>
+            <div className="pt-photo-collage">
+              <img src={`${base}photo1.jpg`} alt="" className="pt-collage-main"   />
+              <img src={`${base}photo2.jpg`} alt="" className="pt-collage-accent" />
             </div>
           </div>
         </div>
@@ -100,6 +137,15 @@ export default function HomeView({ onNavigate }: HomeViewProps) {
         </div>
       </section>
 
+      {/* ── Photo strip ──────────────────────────────────────────────────── */}
+      <div className="pt-photo-strip-wrap">
+        <div className="pt-photo-strip">
+          {['photo3', 'photo4', 'photo5', 'photo7'].map(p => (
+            <img key={p} src={`${base}${p}.jpg`} alt="" className="pt-strip-photo" />
+          ))}
+        </div>
+      </div>
+
       {/* ── Insights ─────────────────────────────────────────────────────── */}
       <section className="pt-section">
         <div className="pt-section-inner">
@@ -119,6 +165,37 @@ export default function HomeView({ onNavigate }: HomeViewProps) {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── Social Feed ──────────────────────────────────────────────────── */}
+      <section className="pt-section pt-section--alt">
+        <div className="pt-section-inner">
+          <div className="pt-section-header">
+            <h2 className="pt-section-title">From My Feed</h2>
+            <div className="pt-social-links">
+              <a href="https://www.instagram.com/motchinchintam/" target="_blank" rel="noopener noreferrer" className="pt-social-pill pt-social-pill--ig">Instagram ↗</a>
+              <a href="https://www.facebook.com/motchinchintam" target="_blank" rel="noopener noreferrer" className="pt-social-pill pt-social-pill--fb">Facebook ↗</a>
+            </div>
+          </div>
+          <div className="pt-social-grid">
+            {SOCIAL_POSTS.map(post => (
+              <a key={post.id} href={post.link} target="_blank" rel="noopener noreferrer" className="pt-social-card">
+                <div className="pt-social-card-top">
+                  <span className={`pt-social-badge pt-social-badge--${post.platform}`}>
+                    {post.platform === 'instagram' ? '📸 Instagram' : '📘 Facebook'}
+                  </span>
+                  <span className="pt-social-date">{post.date}</span>
+                </div>
+                <p className="pt-social-caption">{post.caption}</p>
+                <div className="pt-social-card-footer">
+                  <span className="pt-social-likes">♥ {post.likes}</span>
+                  <span className="pt-social-cta">View post →</span>
+                </div>
+              </a>
+            ))}
+          </div>
+          <p className="pt-social-note">* Posts are curated manually. Follow me for live updates.</p>
         </div>
       </section>
 

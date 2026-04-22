@@ -52,6 +52,10 @@ export interface Strings {
     coreStrengths: string;
     experienceTitle: string;
     principles: { label: string; desc: string }[];
+    currentlyTitle: string;
+    learningMandarin: string; dandaDesc: string;
+    learningEnglish: string; englishDesc: string;
+    planningTravel: string; travelDesc: string;
   };
   insights: { pageTitle: string; pageSub: string; };
   contact: { pageTitle: string; pageSub: string; note: string; };
@@ -122,6 +126,13 @@ const en: Strings = {
       { label: 'Measure what matters', desc: 'KPIs only work when connected to outcomes people care about. I build frameworks that make performance visible and purposeful.' },
       { label: 'Execution over theory', desc: 'Ideas are easy. What separates good work from great work is follow-through. I close the loop — every time.' },
     ],
+    currentlyTitle: 'Beyond Work',
+    learningMandarin: 'Learning Mandarin Chinese',
+    dandaDesc: 'Studying vocabulary & tones daily via danda.vn — a Vietnamese platform for Mandarin learners with streak tracking and themed word sets.',
+    learningEnglish: 'Improving English',
+    englishDesc: 'IELTS 6.0 (B2) achieved · continuing to build fluency and professional vocabulary.',
+    planningTravel: 'Planning to travel abroad',
+    travelDesc: 'Taiwan 2026 is on the list — combining travel with Mandarin immersion.',
   },
   insights: {
     pageTitle: 'Insights',
@@ -338,6 +349,13 @@ const vi: Strings = {
       { label: 'Đo lường những gì quan trọng', desc: 'KPI chỉ có tác dụng khi gắn với kết quả mà mọi người quan tâm. Tôi xây dựng khung giúp hiệu suất trở nên rõ ràng và có mục đích.' },
       { label: 'Thực thi hơn lý thuyết', desc: 'Ý tưởng thì dễ. Điều tạo ra sự khác biệt giữa công việc tốt và xuất sắc là khả năng theo đuổi đến cùng. Tôi luôn khép lại vòng lặp — mọi lúc.' },
     ],
+    currentlyTitle: 'Ngoài Công Việc',
+    learningMandarin: 'Đang học Tiếng Trung',
+    dandaDesc: 'Học từ vựng & thanh điệu hàng ngày qua danda.vn — nền tảng học tiếng Trung dành cho người Việt với hệ thống streak và bộ từ vựng theo chủ đề.',
+    learningEnglish: 'Cải thiện Tiếng Anh',
+    englishDesc: 'IELTS 6.0 (B2) · Tiếp tục xây dựng kỹ năng giao tiếp và từ vựng chuyên nghiệp.',
+    planningTravel: 'Dự định du lịch nước ngoài',
+    travelDesc: 'Đài Loan 2026 đang trong kế hoạch — kết hợp du lịch với trải nghiệm tiếng Trung thực tế.',
   },
   insights: {
     pageTitle: 'Bài Viết',
@@ -554,6 +572,13 @@ const zh: Strings = {
       { label: '衡量真正重要的事', desc: 'KPI只有与人们真正关心的结果挂钩时才有意义。我构建的框架，让绩效数据变得清晰可见、有迹可循。' },
       { label: '执行重于理论', desc: '想法很容易。区分好工作与卓越工作的，是持续的跟进与收尾。我每次都会闭环——没有例外。' },
     ],
+    currentlyTitle: '工作之外',
+    learningMandarin: '正在学习普通话',
+    dandaDesc: '通过 danda.vn 每天学习词汇与声调——这是一个面向越南人的汉语学习平台，提供打卡机制和主题词汇集。',
+    learningEnglish: '持续提升英语',
+    englishDesc: 'IELTS 6.0（B2）· 继续提高口语流利度和专业词汇量。',
+    planningTravel: '计划出境旅行',
+    travelDesc: '2026年台湾之旅已列入计划——将旅行与普通话沉浸式体验相结合。',
   },
   insights: {
     pageTitle: '洞察',

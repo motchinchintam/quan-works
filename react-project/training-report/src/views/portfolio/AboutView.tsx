@@ -4,6 +4,7 @@ import { useLang } from '../../i18n/index';
 interface AboutViewProps { onNavigate: (v: string) => void; }
 
 export default function AboutView({ onNavigate }: AboutViewProps) {
+  const base = import.meta.env.BASE_URL;
   const { s } = useLang();
   const strengths = s.data.strengths;
   const timeline  = TIMELINE.map((t, i) => ({ ...t, role: s.data.timeline[i]?.role ?? t.role }));
@@ -11,15 +12,22 @@ export default function AboutView({ onNavigate }: AboutViewProps) {
   return (
     <div className="pt-page">
 
+      {/* ── Hero with floating photos ────────────────────────────────────── */}
       <div className="pt-page-hero pt-page-hero--about">
-        <div className="pt-section-inner">
-          <span className="pt-eyebrow">{s.about.backgroundEyebrow}</span>
-          <h1 className="pt-page-title">Nguyen Thanh Quan</h1>
-          <p className="pt-page-sub">{s.about.pageSub}</p>
+        <div className="pt-section-inner pt-about-hero-inner">
+          <div className="pt-about-hero-text">
+            <span className="pt-eyebrow">{s.about.backgroundEyebrow}</span>
+            <h1 className="pt-page-title">Nguyen Thanh Quan</h1>
+            <p className="pt-page-sub">{s.about.pageSub}</p>
+          </div>
+          <div className="pt-about-hero-photos">
+            <img src={`${base}photo4.jpg`} alt="" className="pt-about-hero-photo pt-about-hero-photo--main" />
+            <img src={`${base}photo5.jpg`} alt="" className="pt-about-hero-photo pt-about-hero-photo--accent" />
+          </div>
         </div>
       </div>
 
-      {/* Background */}
+      {/* ── Background ──────────────────────────────────────────────────── */}
       <section className="pt-section">
         <div className="pt-section-inner pt-about-body">
           <div className="pt-about-bio">
@@ -47,7 +55,16 @@ export default function AboutView({ onNavigate }: AboutViewProps) {
         </div>
       </section>
 
-      {/* How I work */}
+      {/* ── Photo strip ─────────────────────────────────────────────────── */}
+      <div className="pt-photo-strip-wrap">
+        <div className="pt-photo-strip">
+          {['photo1', 'photo2', 'photo3', 'photo7'].map(p => (
+            <img key={p} src={`${base}${p}.jpg`} alt="" className="pt-strip-photo" />
+          ))}
+        </div>
+      </div>
+
+      {/* ── How I work ──────────────────────────────────────────────────── */}
       <section className="pt-section pt-section--alt">
         <div className="pt-section-inner">
           <h2 className="pt-section-title">{s.about.howIWork}</h2>
@@ -63,7 +80,7 @@ export default function AboutView({ onNavigate }: AboutViewProps) {
         </div>
       </section>
 
-      {/* Strengths */}
+      {/* ── Core Strengths ──────────────────────────────────────────────── */}
       <section className="pt-section">
         <div className="pt-section-inner">
           <h2 className="pt-section-title">{s.about.coreStrengths}</h2>
@@ -79,7 +96,7 @@ export default function AboutView({ onNavigate }: AboutViewProps) {
         </div>
       </section>
 
-      {/* Timeline */}
+      {/* ── Experience timeline ──────────────────────────────────────────── */}
       <section className="pt-section pt-section--alt">
         <div className="pt-section-inner">
           <h2 className="pt-section-title">{s.about.experienceTitle}</h2>
@@ -97,7 +114,50 @@ export default function AboutView({ onNavigate }: AboutViewProps) {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* ── Beyond Work ─────────────────────────────────────────────────── */}
+      <section className="pt-section">
+        <div className="pt-section-inner">
+          <h2 className="pt-section-title">{s.about.currentlyTitle}</h2>
+          <div className="pt-currently-grid">
+
+            {/* Mandarin — featured card with danda.vn */}
+            <a
+              href="https://danda.vn"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pt-currently-card pt-currently-card--featured"
+            >
+              <div className="pt-currently-icon">🀄</div>
+              <div className="pt-currently-body">
+                <div className="pt-currently-title">{s.about.learningMandarin}</div>
+                <div className="pt-currently-desc">{s.about.dandaDesc}</div>
+                <div className="pt-currently-link">danda.vn ↗</div>
+              </div>
+            </a>
+
+            {/* English */}
+            <div className="pt-currently-card">
+              <div className="pt-currently-icon">🇬🇧</div>
+              <div className="pt-currently-body">
+                <div className="pt-currently-title">{s.about.learningEnglish}</div>
+                <div className="pt-currently-desc">{s.about.englishDesc}</div>
+              </div>
+            </div>
+
+            {/* Travel */}
+            <div className="pt-currently-card">
+              <div className="pt-currently-icon">✈️</div>
+              <div className="pt-currently-body">
+                <div className="pt-currently-title">{s.about.planningTravel}</div>
+                <div className="pt-currently-desc">{s.about.travelDesc}</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ─────────────────────────────────────────────────────────── */}
       <section className="pt-cta-section">
         <div className="pt-section-inner pt-cta-inner">
           <p className="pt-cta-line">{s.common.interestedWorking}</p>

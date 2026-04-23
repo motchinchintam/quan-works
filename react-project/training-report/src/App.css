@@ -2389,6 +2389,53 @@ body { margin: 0; background: var(--bg); }
   .home-hero-split { min-height: auto; }
 }
 
+/* ── CV Email Gate modal ───────────────────────────────────────────── */
+.cvg-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+}
+.cvg-card {
+  background: #fff; border-radius: 20px;
+  padding: 2.5rem 2rem 2rem;
+  width: 380px; max-width: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: .75rem;
+  box-shadow: 0 24px 60px rgba(0,0,0,.2);
+}
+.pt-dark .cvg-card { background: #1e1e1e; }
+.cvg-icon  { font-size: 2.2rem; }
+.cvg-title { font-size: 1.2rem; font-weight: 900; color: var(--pt-text); margin: 0; text-align: center; }
+.cvg-sub   { font-size: 13px; color: var(--pt-text2); text-align: center; max-width: 280px; line-height: 1.55; margin: 0; }
+.cvg-form  { display: flex; flex-direction: column; gap: .6rem; width: 100%; margin-top: .25rem; }
+.cvg-input {
+  width: 100%; padding: .75rem 1rem;
+  border: 1.5px solid var(--pt-border); border-radius: 10px;
+  font-family: inherit; font-size: 14px; color: var(--pt-text);
+  background: var(--pt-bg2); outline: none;
+  transition: border-color .15s;
+}
+.cvg-input:focus { border-color: var(--pt-accent); }
+.cvg-input--error { border-color: #C0392B; }
+.pt-dark .cvg-input { background: #2a2a2a; color: #f0ede6; border-color: #3a3a3a; }
+.cvg-error  { font-size: 12px; color: #C0392B; margin: 0; font-weight: 600; }
+.cvg-submit {
+  width: 100%; padding: .85rem;
+  background: var(--pt-accent); color: #fff;
+  border: none; border-radius: 10px; cursor: pointer;
+  font-size: 14px; font-weight: 700; font-family: inherit;
+  transition: background .15s;
+}
+.cvg-submit:hover:not(:disabled) { background: var(--pt-accent2); }
+.cvg-submit:disabled { opacity: .6; cursor: not-allowed; }
+.cvg-skip {
+  background: none; border: none; cursor: pointer; font-family: inherit;
+  font-size: 12px; color: var(--pt-text3); padding: .25rem;
+  transition: color .15s;
+}
+.cvg-skip:hover { color: var(--pt-text2); }
+
 /* ── CV Download button ────────────────────────────────────────────── */
 .pt-cv-download {
   display: inline-flex; align-items: center; gap: 6px;

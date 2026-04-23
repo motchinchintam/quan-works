@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { useLang } from '../../i18n/index';
+import CVGate from '../../components/CVGate';
 
 interface ContactViewProps { onNavigate: (v: string) => void; }
 
@@ -13,8 +15,10 @@ const CONTACTS = [
 
 export default function ContactView({ onNavigate }: ContactViewProps) {
   const { s } = useLang();
+  const [cvGateOpen, setCvGateOpen] = useState(false);
   return (
     <div className="pt-page">
+      {cvGateOpen && <CVGate onClose={() => setCvGateOpen(false)} />}
 
       <div className="pt-page-hero">
         <div className="pt-section-inner">
@@ -22,14 +26,10 @@ export default function ContactView({ onNavigate }: ContactViewProps) {
           <h1 className="pt-page-title">{s.contact.pageTitle}</h1>
           <p className="pt-page-sub">{s.contact.pageSub}</p>
 
-          {/* CV Download — hero level */}
-          <a
-            href="/quan-resume.pdf"
-            download="Nguyen_Thanh_Quan_Resume.pdf"
-            className="pt-cv-download"
-          >
+          {/* CV Download — opens email gate first */}
+          <button className="pt-cv-download" onClick={() => setCvGateOpen(true)}>
             ⬇ Download CV
-          </a>
+          </button>
         </div>
       </div>
 

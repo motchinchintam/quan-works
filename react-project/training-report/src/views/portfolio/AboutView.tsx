@@ -1,16 +1,20 @@
+import { useState } from 'react';
 import { TIMELINE } from '../../data/portfolio';
 import { useLang } from '../../i18n/index';
+import CVGate from '../../components/CVGate';
 
 interface AboutViewProps { onNavigate: (v: string) => void; }
 
 export default function AboutView({ onNavigate }: AboutViewProps) {
   const base = import.meta.env.BASE_URL;
   const { s } = useLang();
+  const [cvGateOpen, setCvGateOpen] = useState(false);
   const strengths = s.data.strengths;
   const timeline  = TIMELINE.map((t, i) => ({ ...t, role: s.data.timeline[i]?.role ?? t.role }));
 
   return (
     <div className="pt-page">
+      {cvGateOpen && <CVGate onClose={() => setCvGateOpen(false)} />}
 
       {/* ── Hero with floating photos ────────────────────────────────────── */}
       <div className="pt-page-hero pt-page-hero--about">
@@ -135,13 +139,9 @@ export default function AboutView({ onNavigate }: AboutViewProps) {
             ))}
           </div>
           <div style={{ marginTop: '2rem' }}>
-            <a
-              href="/quan-resume.pdf"
-              download="Nguyen_Thanh_Quan_Resume.pdf"
-              className="pt-cv-download"
-            >
+            <button className="pt-cv-download" onClick={() => setCvGateOpen(true)}>
               ⬇ Download Full CV
-            </a>
+            </button>
           </div>
         </div>
       </section>

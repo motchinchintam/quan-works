@@ -6,3 +6,16 @@
 .vs/training-reports/CopilotIndices/18.5.39108.44903/SemanticSymbols.db
 .vs/training-reports/CopilotIndices/18.5.39108.44903/SemanticSymbols.db-shm
 .vs/training-reports/CopilotIndices/18.5.39108.44903/SemanticSymbols.db-wal
+
+node_modules/
+dist/
+*.xlsx
+*.xls
+*.csv
+*.docx
+*.pptx
+*.zip
+*.mp4
+*.mov
+.env*
+

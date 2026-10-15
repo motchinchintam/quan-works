@@ -55,11 +55,11 @@ const HUBS: {
     href: 'https://howto.motchinchintam.com',
   },
   {
-    view: 'grokfolder', icon: '📁', name: 'GROK Folder', badge: 'Drive',
+    view: 'grokfolder', icon: '📁', name: 'GROK Folder', badge: 'Personal email',
     accent: '#1D4ED8', accentBg: '#DBEAFE',
-    tools: ['Personal Drive', 'Chief of Staff'],
-    desc: 'Personal GROK Chief of Staff workspace — opens your Drive folder in a new tab.',
-    href: 'https://drive.google.com/drive/folders/1RLR4x8_BCwOrFwdo7rRcG15O5KB7zSum',
+    tools: ['Personal email approval', 'Opens after Quan approves'],
+    desc: 'Personal GROK Chief of Staff workspace. Requires Quan\'s personal-email approval before opening; opens after Quan approves.',
+    href: 'https://howto.motchinchintam.com/grok/',
   },
 ];
 

@@ -290,24 +290,6 @@ function AppInner() {
                 </button>
               ))
             )}
-              <a
-                className="topnav-hub topnav-hub-link"
-                href="https://howto.motchinchintam.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Requires Mango work email"
-              >
-                Mango How-To ↗
-              </a>
-              <a
-                className="topnav-hub topnav-hub-link"
-                href="https://drive.google.com/drive/folders/1RLR4x8_BCwOrFwdo7rRcG15O5KB7zSum"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="GROK personal Drive folder"
-              >
-                GROK Folder ↗
-              </a>
           </nav>
 
           {/* Search (portfolio only) */}
@@ -386,24 +368,6 @@ function AppInner() {
                     {g.icon} {g.label}
                   </button>
                 ))}
-                <a
-                  className="mobile-menu-item"
-                  href="https://howto.motchinchintam.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Mango How-To ↗
-                </a>
-                <a
-                  className="mobile-menu-item"
-                  href="https://drive.google.com/drive/folders/1RLR4x8_BCwOrFwdo7rRcG15O5KB7zSum"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  GROK Folder ↗
-                </a>
                 <div className="topnav-mobile-divider" />
                 <button className="mobile-menu-item" onClick={() => navigate('home')}>← Portfolio</button>
               </>
@@ -415,24 +379,6 @@ function AppInner() {
                 ))}
                 <div className="topnav-mobile-divider" />
                 <button className="mobile-menu-item" onClick={() => navigate('apps')}>⊞ Workspace</button>
-                <a
-                  className="mobile-menu-item"
-                  href="https://howto.motchinchintam.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Mango How-To ↗
-                </a>
-                <a
-                  className="mobile-menu-item"
-                  href="https://drive.google.com/drive/folders/1RLR4x8_BCwOrFwdo7rRcG15O5KB7zSum"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  GROK Folder ↗
-                </a>
                 <div className="mobile-menu-section-label">Language</div>
                 <div className="mobile-lang-row">
                   {LANG_OPTIONS.map(o => (

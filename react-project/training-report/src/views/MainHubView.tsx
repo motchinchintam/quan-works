@@ -41,10 +41,10 @@ const HUBS: {
     desc: 'A private space to log entries, track mood, and do weekly reflections.',
   },
   {
-    view: 'mkthub', icon: '🧠', name: 'Marketing', badge: 'AI-powered',
+    view: 'mkthub', icon: '🧠', name: 'Marketing', badge: 'Marketing & Consulting bots',
     accent: '#6D28D9', accentBg: '#EDE9FE',
-    tools: ['Campaign Brief', 'Content Calendar', 'Ad Copywriting', 'Performance Reports'],
-    desc: 'AI marketing engine — 4 specialist agents, 16 skills & 3 automated workflows.',
+    tools: ['Strategy', 'Content', 'Local SEO', 'Campaign Briefs', 'Monthly Plans'],
+    desc: 'Powered by a group of Marketing & Consulting bots — salon growth office for US nail salons.',
     isAI: true, isNew: true,
   },
   {

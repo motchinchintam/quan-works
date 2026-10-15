@@ -4086,6 +4086,121 @@ body { margin: 0; background: var(--bg); }
   margin: 0 0 1.25rem;
 }
 
+/* ── Marketing Office: hero chips, team, dispatch, extras ─────────────── */
+.mkt-hero-chip-row {
+  display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center;
+  margin: 0 auto 1.25rem; max-width: 640px;
+}
+.mkt-hero-chip {
+  font-size: .75rem; font-weight: 600; color: #4c1d95;
+  background: #ede9fe; border: 1px solid #ddd6fe;
+  padding: .3rem .7rem; border-radius: 999px;
+}
+
+.mkt-team-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.mkt-team-card {
+  background: #fff; border: 1.5px solid #e2e8e2; border-radius: 14px;
+  padding: 1.15rem 1.25rem;
+}
+.mkt-team-card--group {
+  border-color: #c4b5fd; background: linear-gradient(160deg, #f5f3ff 0%, #fff 70%);
+}
+.mkt-team-icon { font-size: 1.75rem; margin-bottom: .4rem; }
+.mkt-team-name { font-size: 1.05rem; font-weight: 700; color: #1F3D2B; }
+.mkt-team-role { font-size: .78rem; font-weight: 600; color: #6D28D9; margin: .15rem 0 .5rem; }
+.mkt-team-blurb { font-size: .82rem; color: #5a6e5a; line-height: 1.55; margin: 0; }
+
+.mkt-dispatch-form {
+  background: #fff; border: 1.5px solid #e2e8e2; border-radius: 14px;
+  padding: 1.35rem 1.5rem;
+}
+.mkt-dispatch-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: .75rem;
+}
+@media (max-width: 680px) { .mkt-dispatch-grid { grid-template-columns: 1fr; } }
+.mkt-dispatch-note, .mkt-dispatch-noop {
+  font-size: .82rem; line-height: 1.5; margin: .75rem 0;
+  padding: .65rem .85rem; border-radius: 8px;
+}
+.mkt-dispatch-note { background: #fff8ed; color: #92400e; border: 1px solid #fbbf24; }
+.mkt-dispatch-noop { background: #eff6ff; color: #1e40af; border: 1px solid #93c5fd; }
+.mkt-dispatch-success {
+  text-align: center; background: #edfaf3; border: 1.5px solid #6fcf97;
+  border-radius: 14px; padding: 2rem 1.5rem;
+}
+.mkt-dispatch-success-icon { font-size: 2rem; margin-bottom: .5rem; }
+.mkt-dispatch-success-title { font-weight: 700; color: #1a6e40; font-size: 1.1rem; }
+.mkt-dispatch-success-sub { color: #2f6b4f; font-size: .88rem; margin: .4rem 0 1rem; }
+.mkt-dispatch-again {
+  border: 1.5px solid #1a6e40; background: #fff; color: #1a6e40;
+  font-weight: 600; border-radius: 8px; padding: .5rem 1rem; cursor: pointer;
+}
+
+.mkt-services-grid, .mkt-packages-grid, .mkt-deliverables-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;
+}
+.mkt-service-card, .mkt-package-card {
+  background: #fff; border: 1.5px solid #e2e8e2; border-radius: 14px; padding: 1.15rem 1.25rem;
+}
+.mkt-service-icon { font-size: 1.4rem; margin-bottom: .35rem; }
+.mkt-service-title, .mkt-package-name { font-weight: 700; color: #1F3D2B; margin-bottom: .4rem; }
+.mkt-service-desc { font-size: .82rem; color: #5a6e5a; line-height: 1.55; margin: 0; }
+.mkt-package-list { margin: 0; padding-left: 1.1rem; color: #5a6e5a; font-size: .85rem; line-height: 1.7; }
+
+.mkt-process-row {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: .85rem;
+}
+.mkt-process-step {
+  background: #fff; border: 1.5px solid #e2e8e2; border-radius: 12px; padding: 1rem;
+  text-align: center;
+}
+.mkt-process-num {
+  width: 1.75rem; height: 1.75rem; margin: 0 auto .5rem; border-radius: 999px;
+  background: #6D28D9; color: #fff; font-weight: 700; font-size: .85rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.mkt-process-title { font-weight: 700; color: #1F3D2B; font-size: .9rem; }
+.mkt-process-desc { font-size: .78rem; color: #5a6e5a; line-height: 1.45; margin: .35rem 0 0; }
+
+.mkt-deliverable-card {
+  display: flex; gap: .75rem; align-items: flex-start;
+  background: #fff; border: 1.5px solid #e2e8e2; border-radius: 12px; padding: .9rem 1rem;
+}
+.mkt-deliverable-icon { font-size: 1.25rem; }
+.mkt-deliverable-title { font-weight: 700; color: #1F3D2B; font-size: .9rem; }
+.mkt-deliverable-note { font-size: .78rem; color: #6b7e6b; }
+
+.mkt-audience-grid { display: flex; flex-wrap: wrap; gap: .6rem; }
+.mkt-audience-chip {
+  background: #f5f3ff; border: 1px solid #ddd6fe; color: #4c1d95;
+  font-size: .84rem; font-weight: 600; padding: .55rem .9rem; border-radius: 999px;
+}
+
+.pt-dark .mkt-team-card,
+.pt-dark .mkt-dispatch-form,
+.pt-dark .mkt-service-card,
+.pt-dark .mkt-package-card,
+.pt-dark .mkt-process-step,
+.pt-dark .mkt-deliverable-card {
+  background: #1a2416; border-color: rgba(237,232,211,.08);
+}
+.pt-dark .mkt-team-name,
+.pt-dark .mkt-service-title,
+.pt-dark .mkt-package-name,
+.pt-dark .mkt-process-title,
+.pt-dark .mkt-deliverable-title { color: #EDE8D3; }
+.pt-dark .mkt-team-blurb,
+.pt-dark .mkt-service-desc,
+.pt-dark .mkt-process-desc,
+.pt-dark .mkt-deliverable-note,
+.pt-dark .mkt-package-list { color: rgba(237,232,211,.6); }
+.pt-dark .mkt-hero-chip { background: #2a1f4a; border-color: #4c1d95; color: #ddd6fe; }
+.pt-dark .mkt-audience-chip { background: #2a1f4a; border-color: #4c1d95; color: #ddd6fe; }
+.pt-dark .mkt-team-card--group { background: #221a38; border-color: #6D28D9; }
+
 /* ── Setup cards ────────────────────────────────────────────────────────── */
 .mkt-setup-grid {
   display: grid;

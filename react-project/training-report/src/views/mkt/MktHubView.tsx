@@ -11,7 +11,7 @@ import {
 interface Props { onNavigate: (v: string) => void; }
 
 /** Placeholder for a future Cloudflare Worker relay. Leave empty until the relay is deployed. */
-const RELAY_URL = '';
+const RELAY_URL = 'https://mkt-task-relay.motchinchiintam.workers.dev';
 
 /** Never ship secrets in client code; auth is handled server-side by the relay. */
 export const MKT_WEBHOOK_AUTH = '';

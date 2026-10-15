@@ -290,6 +290,14 @@ function AppInner() {
                 </button>
               ))
             )}
+              <a
+                className="topnav-hub topnav-hub-link"
+                href="https://howto.motchinchintam.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Mango How-To
+              </a>
           </nav>
 
           {/* Search (portfolio only) */}
@@ -368,6 +376,15 @@ function AppInner() {
                     {g.icon} {g.label}
                   </button>
                 ))}
+                <a
+                  className="mobile-menu-item"
+                  href="https://howto.motchinchintam.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Mango How-To
+                </a>
                 <div className="topnav-mobile-divider" />
                 <button className="mobile-menu-item" onClick={() => navigate('home')}>← Portfolio</button>
               </>
@@ -379,6 +396,15 @@ function AppInner() {
                 ))}
                 <div className="topnav-mobile-divider" />
                 <button className="mobile-menu-item" onClick={() => navigate('apps')}>⊞ Workspace</button>
+                <a
+                  className="mobile-menu-item"
+                  href="https://howto.motchinchintam.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Mango How-To
+                </a>
                 <div className="mobile-menu-section-label">Language</div>
                 <div className="mobile-lang-row">
                   {LANG_OPTIONS.map(o => (

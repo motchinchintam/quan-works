@@ -8,7 +8,7 @@ interface MainHubViewProps {
 const HUBS: {
   view: string; icon: string; name: string; badge: string;
   accent: string; accentBg: string; desc: string;
-  tools: string[]; isAI?: boolean; isNew?: boolean;
+  tools: string[]; isAI?: boolean; isNew?: boolean; href?: string;
 }[] = [
   {
     view: 'hub', icon: '📊', name: 'Training', badge: 'Work tools',
@@ -47,6 +47,20 @@ const HUBS: {
     desc: 'AI marketing engine — 4 specialist agents, 16 skills & 3 automated workflows.',
     isAI: true, isNew: true,
   },
+  {
+    view: 'mangohowto', icon: '📖', name: 'Mango How-To', badge: 'MS guides',
+    accent: '#BE185D', accentBg: '#FCE7F3',
+    tools: ['Staff guides', 'Work-email login'],
+    desc: 'MS staff guides — sign in with your work email.',
+    href: 'https://howto.motchinchintam.com',
+  },
+  {
+    view: 'grokfolder', icon: '📁', name: 'GROK Folder', badge: 'Drive',
+    accent: '#1D4ED8', accentBg: '#DBEAFE',
+    tools: ['Personal Drive', 'Chief of Staff'],
+    desc: 'Open the GROK personal chief-of-staff folder in Google Drive.',
+    href: 'https://drive.google.com/drive/folders/1RLR4x8_BCwOrFwdo7rRcG15O5KB7zSum',
+  },
 ];
 
 export default function MainHubView({ onNavigate }: MainHubViewProps) {
@@ -63,7 +77,7 @@ export default function MainHubView({ onNavigate }: MainHubViewProps) {
             <div className="apps-greeting">
               {greeting}, Quân <span>— your workspace</span>
             </div>
-            <div className="apps-subtitle">6 tools · Everything in one place</div>
+            <div className="apps-subtitle">8 tools · Everything in one place</div>
           </div>
           <div className="apps-profile-badge">
             <div className="apps-profile-avatar">Q</div>
@@ -84,7 +98,13 @@ export default function MainHubView({ onNavigate }: MainHubViewProps) {
               key={hub.view}
               className="hub-card"
               style={{ '--card-accent': hub.accent, '--card-accent-bg': hub.accentBg } as React.CSSProperties}
-              onClick={() => onNavigate(hub.view)}
+              onClick={() => {
+                if (hub.href) {
+                  window.open(hub.href, '_blank', 'noopener,noreferrer');
+                  return;
+                }
+                onNavigate(hub.view);
+              }}
             >
               <div className="hub-card-top">
                 <div className="hub-icon-wrap">{hub.icon}</div>

@@ -10,11 +10,11 @@ import {
 
 interface Props { onNavigate: (v: string) => void; }
 
-/** Replace with your n8n / Make / Zapier / Cloudflare Worker webhook once wired. */
-const WEBHOOK_URL = 'https://api2.cursor.sh/automations/webhook/c118f6f2-91f7-5219-beef-5f373974ea6b';
+/** Placeholder for a future Cloudflare Worker relay. Leave empty until the relay is deployed. */
+const RELAY_URL = '';
 
-/** Optional shared secret — leave empty until Quan sets one. Form stays usable for demo UI. */
-const MKT_WEBHOOK_AUTH = "Bearer 250798";
+/** Never ship secrets in client code; auth is handled server-side by the relay. */
+export const MKT_WEBHOOK_AUTH = '';
 const TASK_GATE_CODE = '86dmmp';
 
 const BOT_TEAM = [
@@ -71,7 +71,7 @@ export default function MktHubView({ onNavigate }: Props) {
 
   const providerCfg = PROVIDERS.find(p => p.id === provider)!;
   const currentKey  = getProviderKey(provider);
-  const webhookReady = !WEBHOOK_URL.includes('hooks.example.com');
+  const webhookReady = RELAY_URL !== '';
 
   function switchProvider(p: MktProvider) {
     sessionStorage.setItem(MKT_PROVIDER_STORAGE, p);
@@ -125,15 +125,14 @@ export default function MktHubView({ onNavigate }: Props) {
         gateCode: gateCode.trim(),
         source: 'motchinchintam.com marketing workspace',
       };
-      const res = await fetch(WEBHOOK_URL, {
+      const res = await fetch(RELAY_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': MKT_WEBHOOK_AUTH,
         },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error(`Webhook responded ${res.status}`);
+      if (!res.ok) throw new Error(`Relay responded ${res.status}`);
       setTaskStatus('done');
       setClientName('');
       setTaskType('');
@@ -284,13 +283,13 @@ export default function MktHubView({ onNavigate }: Props) {
 
             {!webhookReady && (
               <div className="mkt-dispatch-note">
-                Webhook not wired yet (<code>WEBHOOK_URL</code> is still the placeholder). Submit will show a dry-run message until Quan replaces it.
+                Task intake is being connected
               </div>
             )}
 
             {taskStatus === 'noop' && (
               <div className="mkt-dispatch-noop">
-                Dry run OK — form validated. Set <code>WEBHOOK_URL</code> in <code>MktHubView.tsx</code> to go live.
+                Task intake is being connected
               </div>
             )}
             {taskStatus === 'error' && taskError && (

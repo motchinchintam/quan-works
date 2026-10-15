@@ -48,17 +48,17 @@ const HUBS: {
     isAI: true, isNew: true,
   },
   {
-    view: 'mangohowto', icon: '📖', name: 'Mango How-To', badge: 'MS guides',
+    view: 'mangohowto', icon: '📖', name: 'Mango How-To', badge: 'Work email',
     accent: '#BE185D', accentBg: '#FCE7F3',
-    tools: ['Staff guides', 'Work-email login'],
-    desc: 'MS staff guides — sign in with your work email.',
+    tools: ['Staff guides', 'Work email required'],
+    desc: 'Staff how-to guides. Sign in with your Mango work email to open.',
     href: 'https://howto.motchinchintam.com',
   },
   {
     view: 'grokfolder', icon: '📁', name: 'GROK Folder', badge: 'Drive',
     accent: '#1D4ED8', accentBg: '#DBEAFE',
     tools: ['Personal Drive', 'Chief of Staff'],
-    desc: 'Open the GROK personal chief-of-staff folder in Google Drive.',
+    desc: 'Personal GROK Chief of Staff workspace — opens your Drive folder in a new tab.',
     href: 'https://drive.google.com/drive/folders/1RLR4x8_BCwOrFwdo7rRcG15O5KB7zSum',
   },
 ];
@@ -125,7 +125,7 @@ export default function MainHubView({ onNavigate }: MainHubViewProps) {
                   <span key={t} className="hub-tool-chip">{t}</span>
                 ))}
               </div>
-              <button className="hub-card-open">Open →</button>
+              <button className="hub-card-open">{hub.href ? 'Open ↗' : 'Open →'}</button>
             </div>
           ))}
         </div>

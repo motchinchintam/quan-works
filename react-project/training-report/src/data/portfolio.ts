@@ -181,6 +181,34 @@ export const INSIGHTS: InsightPost[] = [
   },
 ];
 
+export interface Testimonial {
+  quote: string;
+  name: string;
+  role: string;
+  company: string;
+}
+
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    quote: "Quân built our onboarding system from the ground up. New hires went from having no roadmap to hitting their first milestones in weeks. The structure he put in place is still running today.",
+    name: "Tram Nguyen",
+    role: "Operations Manager",
+    company: "Mango for Salon",
+  },
+  {
+    quote: "Before Quân redesigned our client workflows, churn felt like a constant fire to put out. After his system went live, the team finally had a process they could trust — and our numbers showed it.",
+    name: "Minh Tran",
+    role: "Team Lead",
+    company: "Zota Brand",
+  },
+  {
+    quote: "Scaling two teams at once while opening new cities is not easy. Quân made it look manageable. His training pipeline meant we had people ready before the offices even opened.",
+    name: "Hoang Le",
+    role: "Regional Director",
+    company: "Global Liaison",
+  },
+];
+
 export const STRENGTHS = [
   { title: 'SOP & Process Design',     desc: 'Building systems that teams can execute without constant supervision.' },
   { title: 'Training Systems',          desc: 'Structured programs that turn new hires into reliable performers.' },

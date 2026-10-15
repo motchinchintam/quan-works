@@ -1,18 +1,38 @@
 import { useState, useRef, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 
 interface CVGateProps {
   onClose: () => void;
 }
 
-// ── Web3Forms API key ────────────────────────────────────────────────────────
-// 1. Go to https://web3forms.com  →  enter your email  →  get free API key
-// 2. Replace the string below with your key
-const WEB3FORMS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
+const SERVICE_ID  = 'service_yh241na';
+const TEMPLATE_ID = 'template_er27wcf';
+const PUBLIC_KEY  = '3UnNkgBBIF_gnCUaA';
+const SENT_KEY    = 'cv-sent-emails'; // localStorage — one request per email
+
+function hasSentBefore(email: string): boolean {
+  try {
+    const stored = JSON.parse(localStorage.getItem(SENT_KEY) || '[]') as string[];
+    return stored.includes(email);
+  } catch {
+    return false;
+  }
+}
+
+function markAsSent(email: string): void {
+  try {
+    const stored = JSON.parse(localStorage.getItem(SENT_KEY) || '[]') as string[];
+    if (!stored.includes(email)) {
+      stored.push(email);
+      localStorage.setItem(SENT_KEY, JSON.stringify(stored));
+    }
+  } catch { /* ignore */ }
+}
 
 export default function CVGate({ onClose }: CVGateProps) {
-  const [email,   setEmail]   = useState('');
-  const [status,  setStatus]  = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
-  const [errMsg,  setErrMsg]  = useState('');
+  const [email,  setEmail]  = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'duplicate' | 'error'>('idle');
+  const [errMsg, setErrMsg] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => { inputRef.current?.focus(); }, []);
@@ -23,58 +43,67 @@ export default function CVGate({ onClose }: CVGateProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!isValid(email)) { setErrMsg('Please enter a valid email address.'); return; }
+    const normalized = email.trim().toLowerCase();
+
+    if (!isValid(normalized)) { setErrMsg('Please enter a valid email address.'); return; }
+
+    if (hasSentBefore(normalized)) { setStatus('duplicate'); return; }
 
     setStatus('loading');
     setErrMsg('');
 
     try {
-      // Send email to Quân via Web3Forms (free, no backend needed)
-      await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: '📄 CV Download — New Lead',
-          from_name: 'motchinchintam.com',
-          email: email.trim(),
-          message: `Someone downloaded your CV.\n\nEmail: ${email.trim()}\nTime: ${new Date().toLocaleString()}`,
-        }),
-      });
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          // Match these variable names in your EmailJS template
+          email:      normalized,
+          from_email: normalized,
+          message:    `CV requested by: ${normalized}\nTime: ${new Date().toLocaleString('en-GB')}`,
+        },
+        PUBLIC_KEY,
+      );
+      markAsSent(normalized);
+      setStatus('done');
+      setTimeout(onClose, 2500);
     } catch (_) {
-      // Silently fail — download still proceeds
+      setStatus('error');
+      setErrMsg('Something went wrong. Please try again.');
     }
-
-    setStatus('done');
-
-    // Trigger the actual file download
-    const link = document.createElement('a');
-    link.href = '/quan-resume.pdf';
-    link.download = 'Nguyen_Thanh_Quan_Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    // Close modal after short delay
-    setTimeout(onClose, 1800);
   }
 
   return (
     <div className="cvg-overlay" onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
       <div className="cvg-card">
 
-        {status === 'done' ? (
+        {status === 'done' && (
           <>
             <div className="cvg-icon">✅</div>
-            <h2 className="cvg-title">Download started!</h2>
-            <p className="cvg-sub">Thanks — your download should begin automatically.</p>
+            <h2 className="cvg-title">Request sent!</h2>
+            <p className="cvg-sub">
+              Quân will send his CV to <strong>{email.trim()}</strong> — check your inbox shortly.
+            </p>
           </>
-        ) : (
+        )}
+
+        {status === 'duplicate' && (
+          <>
+            <div className="cvg-icon">📬</div>
+            <h2 className="cvg-title">Already requested</h2>
+            <p className="cvg-sub">
+              A request was already made from this email. Check your inbox, or contact Quân directly.
+            </p>
+            <button className="cvg-skip" onClick={onClose}>Close</button>
+          </>
+        )}
+
+        {(status === 'idle' || status === 'loading' || status === 'error') && (
           <>
             <div className="cvg-icon">📄</div>
-            <h2 className="cvg-title">Download CV</h2>
+            <h2 className="cvg-title">Get Quân's CV</h2>
             <p className="cvg-sub">
-              Enter your email to download. I'll only use it to follow up if relevant.
+              Enter your email and Quân will send his CV directly to you.
             </p>
 
             <form className="cvg-form" onSubmit={handleSubmit} noValidate>
@@ -84,17 +113,13 @@ export default function CVGate({ onClose }: CVGateProps) {
                 className={`cvg-input${errMsg ? ' cvg-input--error' : ''}`}
                 placeholder="you@example.com"
                 value={email}
-                onChange={e => { setEmail(e.target.value); setErrMsg(''); }}
+                onChange={e => { setEmail(e.target.value); setErrMsg(''); if (status === 'error') setStatus('idle'); }}
                 disabled={status === 'loading'}
               />
               {errMsg && <p className="cvg-error">{errMsg}</p>}
 
-              <button
-                type="submit"
-                className="cvg-submit"
-                disabled={status === 'loading'}
-              >
-                {status === 'loading' ? 'Sending…' : '⬇ Download CV'}
+              <button type="submit" className="cvg-submit" disabled={status === 'loading'}>
+                {status === 'loading' ? 'Sending…' : 'Request CV →'}
               </button>
             </form>
 

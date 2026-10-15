@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TIMELINE } from '../../data/portfolio';
+import { TIMELINE, TESTIMONIALS } from '../../data/portfolio';
 import { useLang } from '../../i18n/index';
 import CVGate from '../../components/CVGate';
 
@@ -146,19 +146,34 @@ export default function AboutView({ onNavigate }: AboutViewProps) {
         </div>
       </section>
 
+      {/* ── Testimonials ────────────────────────────────────────────────── */}
+      <section className="pt-section pt-section--alt pt-testimonials-section">
+        <div className="pt-section-inner">
+          <span className="pt-eyebrow">What people say</span>
+          <h2 className="pt-section-title" style={{ marginTop: '.25rem', marginBottom: '2rem' }}>Testimonials</h2>
+          <div className="pt-testi-grid">
+            {TESTIMONIALS.map((t, i) => (
+              <div key={i} className="pt-testi-card">
+                <div className="pt-testi-quote">"</div>
+                <p className="pt-testi-body">{t.quote}</p>
+                <div className="pt-testi-author">
+                  <div className="pt-testi-name">{t.name}</div>
+                  <div className="pt-testi-role">{t.role} · {t.company}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Beyond Work ─────────────────────────────────────────────────── */}
       <section className="pt-section">
         <div className="pt-section-inner">
           <h2 className="pt-section-title">{s.about.currentlyTitle}</h2>
           <div className="pt-currently-grid">
 
-            {/* Mandarin — featured card with danda.vn */}
-            <a
-              href="https://danda.vn"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pt-currently-card pt-currently-card--featured"
-            >
+            <a href="https://danda.vn" target="_blank" rel="noopener noreferrer"
+              className="pt-currently-card pt-currently-card--featured">
               <div className="pt-currently-icon">🀄</div>
               <div className="pt-currently-body">
                 <div className="pt-currently-title">{s.about.learningMandarin}</div>
@@ -167,7 +182,6 @@ export default function AboutView({ onNavigate }: AboutViewProps) {
               </div>
             </a>
 
-            {/* English */}
             <div className="pt-currently-card">
               <div className="pt-currently-icon">🇬🇧</div>
               <div className="pt-currently-body">
@@ -176,7 +190,6 @@ export default function AboutView({ onNavigate }: AboutViewProps) {
               </div>
             </div>
 
-            {/* Travel */}
             <div className="pt-currently-card">
               <div className="pt-currently-icon">✈️</div>
               <div className="pt-currently-body">

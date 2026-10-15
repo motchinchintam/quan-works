@@ -9,11 +9,42 @@ type MergedProject = Project & { title: string; context: string; result: string;
 
 export default function WorkView({ onNavigate }: WorkViewProps) {
   const { s } = useLang();
-  const [selected, setSelected] = useState<MergedProject | null>(null);
+  const [selected,    setSelected]    = useState<MergedProject | null>(null);
+  const [selectedIdx, setSelectedIdx] = useState<number>(-1);
+  const [activeTag,   setActiveTag]   = useState<string>('All');
 
   const projects: MergedProject[] = PROJECTS.map((p, i) => ({ ...p, ...s.data.projects[i] }));
 
-  if (selected) return <ProjectDetail project={selected} onBack={() => setSelected(null)} />;
+  /* Unique tags across all projects */
+  const allTags = ['All', ...Array.from(new Set(projects.flatMap(p => p.tags)))];
+
+  const filtered = activeTag === 'All' ? projects : projects.filter(p => p.tags.includes(activeTag));
+
+  function openProject(p: MergedProject, idx: number) {
+    setSelected(p);
+    setSelectedIdx(idx);
+  }
+
+  function goNext() {
+    const next = selectedIdx + 1;
+    if (next < projects.length) { setSelected(projects[next]); setSelectedIdx(next); }
+  }
+
+  function goPrev() {
+    const prev = selectedIdx - 1;
+    if (prev >= 0) { setSelected(projects[prev]); setSelectedIdx(prev); }
+  }
+
+  if (selected) return (
+    <ProjectDetail
+      project={selected}
+      index={selectedIdx}
+      total={projects.length}
+      onBack={() => { setSelected(null); setSelectedIdx(-1); }}
+      onNext={selectedIdx < projects.length - 1 ? goNext : undefined}
+      onPrev={selectedIdx > 0 ? goPrev : undefined}
+    />
+  );
 
   return (
     <div className="pt-page">
@@ -25,13 +56,44 @@ export default function WorkView({ onNavigate }: WorkViewProps) {
         </div>
       </div>
 
+      {/* Tag filter bar */}
+      <div className="pt-section-inner">
+        <div className="pt-tag-filter">
+          {allTags.map(tag => (
+            <button
+              key={tag}
+              className={`pt-tag-filter-btn${activeTag === tag ? ' active' : ''}`}
+              onClick={() => setActiveTag(tag)}
+            >
+              {tag}
+              {tag !== 'All' && (
+                <span className="pt-tag-filter-count">
+                  {projects.filter(p => p.tags.includes(tag)).length}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="pt-section-inner pt-work-list">
-        {projects.map((p, i) => (
-          <div key={p.id} className="pt-work-item" onClick={() => setSelected(p)}>
+        {filtered.length === 0 && (
+          <div className="pt-empty-state">No projects match this filter.</div>
+        )}
+        {filtered.map((p, i) => (
+          <div key={p.id} className="pt-work-item" onClick={() => openProject(p, projects.indexOf(p))}>
             <span className="pt-work-num">0{i + 1}</span>
             <div className="pt-work-info">
               <div className="pt-work-tags">
-                {p.tags.map(t => <span key={t} className="pt-tag">{t}</span>)}
+                {p.tags.map(t => (
+                  <span
+                    key={t}
+                    className={`pt-tag${t === activeTag ? ' pt-tag--active' : ''}`}
+                    onClick={e => { e.stopPropagation(); setActiveTag(t); }}
+                  >
+                    {t}
+                  </span>
+                ))}
               </div>
               <h2 className="pt-work-title">{p.title}</h2>
               <p className="pt-work-meta">{p.company} · {p.period}</p>
@@ -71,7 +133,16 @@ export default function WorkView({ onNavigate }: WorkViewProps) {
 }
 
 /* ── Project detail ─────────────────────────────────────────────── */
-function ProjectDetail({ project: p, onBack }: { project: MergedProject; onBack: () => void }) {
+function ProjectDetail({
+  project: p, index, total, onBack, onNext, onPrev,
+}: {
+  project: MergedProject;
+  index: number;
+  total: number;
+  onBack: () => void;
+  onNext?: () => void;
+  onPrev?: () => void;
+}) {
   const { s } = useLang();
   const detail = p.detail;
 
@@ -79,7 +150,15 @@ function ProjectDetail({ project: p, onBack }: { project: MergedProject; onBack:
     <div className="pt-page">
       <div className="pt-detail-wrap">
 
-        <button className="pt-back-btn" onClick={onBack}>{s.common.backToWork}</button>
+        {/* Navigation bar */}
+        <div className="pt-detail-nav">
+          <button className="pt-back-btn" onClick={onBack}>{s.common.backToWork}</button>
+          <div className="pt-detail-nav-right">
+            <span className="pt-detail-counter">{index + 1} / {total}</span>
+            <button className="pt-detail-prev" onClick={onPrev} disabled={!onPrev} aria-label="Previous project">← Prev</button>
+            <button className="pt-detail-next" onClick={onNext} disabled={!onNext} aria-label="Next project">Next →</button>
+          </div>
+        </div>
 
         <div className="pt-detail-header">
           <div className="pt-work-tags">
@@ -119,6 +198,12 @@ function ProjectDetail({ project: p, onBack }: { project: MergedProject; onBack:
               {detail.impact.map((imp, i) => <li key={i}>{imp}</li>)}
             </ul>
           </div>
+        </div>
+
+        {/* Bottom prev/next */}
+        <div className="pt-detail-bottom-nav">
+          <button className="pt-detail-nav-btn" onClick={onPrev} disabled={!onPrev}>← Previous project</button>
+          <button className="pt-detail-nav-btn pt-detail-nav-btn--next" onClick={onNext} disabled={!onNext}>Next project →</button>
         </div>
 
       </div>

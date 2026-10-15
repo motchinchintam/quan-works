@@ -13,10 +13,12 @@ type Result = {
 
 export default function NavSearch({ onNavigate }: NavSearchProps) {
   const { s } = useLang();
-  const [open, setOpen]   = useState(false);
-  const [query, setQuery] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
-  const wrapRef  = useRef<HTMLDivElement>(null);
+  const [open,      setOpen]      = useState(false);
+  const [query,     setQuery]     = useState('');
+  const [cursor,    setCursor]    = useState(-1);
+  const inputRef  = useRef<HTMLInputElement>(null);
+  const wrapRef   = useRef<HTMLDivElement>(null);
+  const resultRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => { if (open) inputRef.current?.focus(); }, [open]);
 
@@ -28,7 +30,10 @@ export default function NavSearch({ onNavigate }: NavSearchProps) {
     return () => document.removeEventListener('mousedown', onDown);
   }, []);
 
-  function close() { setOpen(false); setQuery(''); }
+  /* Reset cursor whenever results change */
+  useEffect(() => { setCursor(-1); }, [query]);
+
+  function close() { setOpen(false); setQuery(''); setCursor(-1); }
 
   /* ── build search corpus from current language ── */
   const corpus: Result[] = [
@@ -69,9 +74,37 @@ export default function NavSearch({ onNavigate }: NavSearchProps) {
         )
         .slice(0, 8);
 
-  function go(nav: string) {
-    onNavigate(nav);
-    close();
+  function go(nav: string) { onNavigate(nav); close(); }
+
+  function highlight(text: string): string {
+    if (!q) return text;
+    const idx = text.toLowerCase().indexOf(q);
+    if (idx === -1) return text;
+    return (
+      text.slice(0, idx) +
+      `<mark class="nav-search-hl">${text.slice(idx, idx + q.length)}</mark>` +
+      text.slice(idx + q.length)
+    );
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Escape') { close(); return; }
+    if (results.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const next = Math.min(cursor + 1, results.length - 1);
+      setCursor(next);
+      resultRefs.current[next]?.focus();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (cursor <= 0) { setCursor(-1); inputRef.current?.focus(); return; }
+      const prev = cursor - 1;
+      setCursor(prev);
+      resultRefs.current[prev]?.focus();
+    } else if (e.key === 'Enter' && cursor === -1 && results.length > 0) {
+      go(results[0].navigate);
+    }
   }
 
   return (
@@ -85,20 +118,42 @@ export default function NavSearch({ onNavigate }: NavSearchProps) {
             placeholder="Search pages, projects, insights…"
             value={query}
             onChange={e => setQuery(e.target.value)}
-            onKeyDown={e => { if (e.key === 'Escape') close(); }}
+            onKeyDown={handleKeyDown}
+            aria-label="Search site"
+            aria-autocomplete="list"
           />
           <button className="nav-search-close" onClick={close}>✕</button>
 
           {results.length > 0 && (
-            <div className="nav-search-dropdown">
+            <div className="nav-search-dropdown" role="listbox">
               {results.map((r, i) => (
-                <button key={i} className="nav-search-result" onClick={() => go(r.navigate)}>
+                <button
+                  key={i}
+                  ref={el => { resultRefs.current[i] = el; }}
+                  className={`nav-search-result${cursor === i ? ' focused' : ''}`}
+                  onClick={() => go(r.navigate)}
+                  onKeyDown={e => {
+                    if (e.key === 'ArrowDown') { e.preventDefault(); const next = Math.min(i + 1, results.length - 1); setCursor(next); resultRefs.current[next]?.focus(); }
+                    if (e.key === 'ArrowUp')   { e.preventDefault(); if (i === 0) { setCursor(-1); inputRef.current?.focus(); } else { setCursor(i - 1); resultRefs.current[i - 1]?.focus(); } }
+                    if (e.key === 'Escape')    { close(); }
+                  }}
+                  role="option"
+                  aria-selected={cursor === i}
+                >
                   <span className={`nav-search-badge nav-search-badge--${r.badge.toLowerCase()}`}>
                     {r.badge}
                   </span>
                   <div className="nav-search-result-info">
-                    <span className="nav-search-result-title">{r.title}</span>
-                    {r.desc && <span className="nav-search-result-desc">{r.desc}</span>}
+                    <span
+                      className="nav-search-result-title"
+                      dangerouslySetInnerHTML={{ __html: highlight(r.title) }}
+                    />
+                    {r.desc && (
+                      <span
+                        className="nav-search-result-desc"
+                        dangerouslySetInnerHTML={{ __html: highlight(r.desc) }}
+                      />
+                    )}
                   </div>
                   <span className="nav-search-result-arrow">→</span>
                 </button>
@@ -116,7 +171,7 @@ export default function NavSearch({ onNavigate }: NavSearchProps) {
         <button
           className="nav-search-trigger"
           onClick={() => setOpen(true)}
-          title="Search"
+          title="Search (type to find pages, projects, insights)"
           aria-label="Search"
         >
           🔍
